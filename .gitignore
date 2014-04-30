@@ -12,6 +12,7 @@
 hs_err_pid*
 
 .settings
-.classpath.
+.classpath
+.project
 README.md
 bin
