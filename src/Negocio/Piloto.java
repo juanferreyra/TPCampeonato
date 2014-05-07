@@ -27,7 +27,6 @@ public class Piloto
 		this.nombre = nombre;
 	}
 
-
 	public int getNumero() 
 	{
 		return numero;
@@ -38,7 +37,6 @@ public class Piloto
 		this.numero = numero;
 	}
 
-
 	public int getCarrerasCorridas() 
 	{
 		return carrerasCorridas;
@@ -48,8 +46,7 @@ public class Piloto
 	{
 		this.carrerasCorridas = carrerasCorridas;
 	}
-
-
+	
 	public int getCantidadDeSobrepasos() 
 	{	
 		return cantidadDeSobrepasos;
@@ -60,6 +57,14 @@ public class Piloto
 		this.cantidadDeSobrepasos = cantidadDeSobrepasos;
 	}
 	
+	
+	////METODOS////
+	
+	
+	public boolean equals(Piloto otro) 
+	{
+		return (this.nombre.equals(otro.nombre) && this.numero == otro.numero);
+	}
 	
 	
 	

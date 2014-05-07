@@ -27,7 +27,6 @@ public class Carrera
 		this.fecha = fecha;
 	}
 
-
 	public String getAutodromo() 
 	{
 		return autodromo;
@@ -38,7 +37,6 @@ public class Carrera
 		this.autodromo = autodromo;
 	}
 
-
 	public Resultado getResultado() 
 	{
 		return resultado;
@@ -47,6 +45,20 @@ public class Carrera
 	public void setResultado(Resultado resultado) 
 	{
 		this.resultado = resultado;
+	}
+	
+	
+	////METODOS////
+	
+	public boolean equals(Carrera otra)
+	{
+		return (this.fecha.equals(otra.fecha) && this.autodromo.equals(otra.autodromo));
+	}
+	
+	
+	public void agregarClasificacion(Piloto p, int posicion)
+	{
+		resultado.getClasificacion().put(p, posicion);
 	}
 	
 	

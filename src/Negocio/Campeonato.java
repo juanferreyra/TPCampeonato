@@ -1,4 +1,5 @@
 package Negocio;
+import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.TreeMap;
@@ -32,7 +33,6 @@ public class Campeonato
 		this.carreras = carreras;
 	}
 
-
 	public ArrayList<Piloto> getPilotos() 
 	{
 		return pilotos;
@@ -43,7 +43,6 @@ public class Campeonato
 		this.pilotos = pilotos;
 	}
 
-
 	public Map<Integer, Integer> getPuntos() 
 	{
 		return puntos;
@@ -53,7 +52,6 @@ public class Campeonato
 	{
 		this.puntos = puntos;
 	}
-
 
 	public Map<Integer, Integer> getCampeonatoParalelo() 
 	{
@@ -66,6 +64,25 @@ public class Campeonato
 	}
 	
 	
+	////METODOS////
+	
+	//Agrega un piloto a la lista de pilotos
+	public void agregarPiloto(int numero, String nombre)
+	{
+		Piloto p = new Piloto(nombre, numero);
+		if(pilotos.contains(p))
+			throw new InvalidParameterException();
+		pilotos.add(p);
+	}
+	
+	//Agrega una carrera a la lista de carreras
+	public void agregarCarrera(String autodromo, String fecha)
+	{
+		Carrera c = new Carrera(fecha, autodromo);
+		if(carreras.contains(c))
+			throw new InvalidParameterException();
+		carreras.add(c);
+	}
 	
 	
 
