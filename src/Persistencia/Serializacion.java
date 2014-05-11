@@ -7,14 +7,17 @@ import java.io.FileInputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import java.util.TreeMap;
+
+import Negocio.Campeonato;
 
 
 
 public class Serializacion 
 {
-	//Recibe una lista y un archivo para guardar los datos 
-	//de dicha lista en dicho archivo
-	public static void guardar(ArrayList lista1, String archivo)
+	//Recibe una objeto Campeonato y un archivo para guardar los datos 
+	//de dicho objeto en dicho archivo
+	public static void guardar(Campeonato campeonato, String archivo)
 	{
 		
 		try 
@@ -22,7 +25,7 @@ public class Serializacion
 			FileOutputStream fos = new FileOutputStream(archivo);
 			ObjectOutputStream out = new ObjectOutputStream(fos);
 			
-			out.writeObject(lista1);
+			out.writeObject(campeonato);
 			
 			out.close();
 		}
@@ -34,15 +37,15 @@ public class Serializacion
 	}
 	
 	//Extrae los datos que tiene el archivo pasado como parametro,
-	//y los devuelve como una objeto ArrayList
-	public static ArrayList cargar(String archivo)
+	//y los devuelve como una objeto Campeonato
+	public static Campeonato cargar(String archivo)
 	{
 		try
 		{
 			FileInputStream fis = new FileInputStream(archivo);
 			ObjectInputStream ois = new ObjectInputStream(fis);	
 			
-			return (ArrayList)ois.readObject();
+			return (Campeonato)ois.readObject();
 		}
 		catch(Exception e)
 		{
@@ -54,16 +57,27 @@ public class Serializacion
 	
 	public static void main(String[] args) 
 	{
-		ArrayList<Integer> l = new ArrayList<Integer>();
-		l.add(1);
-		l.add(2);
-		l.add(4);
 		
-		guardar(l, "dato.txt");
-		ArrayList<Integer> a = cargar("dato.txt");
+		Campeonato c1 = new Campeonato();
 		
-		for(int i = 0; i< a.size(); ++i)
-			System.out.println(a.get(i));
+		c1.agregarPiloto(1, "Fran");
+		c1.agregarPiloto(2, "Juan");
+		c1.agregarPiloto(3, "Santi");
+		c1.agregarCarrera("San Miguel", "10");
+		c1.agregarCarrera("Polvorines", "11");
+		c1.agregarCarrera("Malvinas Arg.", "12");
+		
+		
+		guardar(c1, "dato.txt");
+		Campeonato a = cargar("dato.txt");
+		
+		for (int i = 0; i < a.getPilotos().size(); i++) 
+		{
+			System.out.println(a.getPilotos().get(i).getNombre());
+			
+		}
+		
+		
 	}
 	
 

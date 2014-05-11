@@ -1,19 +1,23 @@
 package Negocio;
 
-public class Piloto 
+import java.io.Serializable;
+
+public class Piloto implements Serializable
 {
 	private String nombre;
 	private int numero;
-	private int carrerasCorridas;
 	private int cantidadDeSobrepasos;
+	protected int puntos;
+	protected double tiempoClasificacion;///*CREO QUE ESTA VARIABLE NO SIRVE PARA NADA*////
+	protected Integer PosicionFinal;
 	
 	////CONSTRUCTOR////
 	public Piloto(String nombre, int numero)
 	{
 		this.nombre = nombre;
 		this.numero = numero;
-		carrerasCorridas = 0;
-		cantidadDeSobrepasos = 0;
+		this.puntos = 0;
+		this.cantidadDeSobrepasos = 0;
 	}
 
 	////GETTERS Y SETTERS////
@@ -37,16 +41,6 @@ public class Piloto
 		this.numero = numero;
 	}
 
-	public int getCarrerasCorridas() 
-	{
-		return carrerasCorridas;
-	}
-
-	public void setCarrerasCorridas(int carrerasCorridas) 
-	{
-		this.carrerasCorridas = carrerasCorridas;
-	}
-	
 	public int getCantidadDeSobrepasos() 
 	{	
 		return cantidadDeSobrepasos;
