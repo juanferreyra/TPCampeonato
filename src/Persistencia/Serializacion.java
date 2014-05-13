@@ -40,18 +40,21 @@ public class Serializacion
 	//y los devuelve como una objeto Campeonato
 	public static Campeonato cargar(String archivo)
 	{
+		Campeonato ret = null;
 		try
 		{
 			FileInputStream fis = new FileInputStream(archivo);
 			ObjectInputStream ois = new ObjectInputStream(fis);	
 			
-			return (Campeonato)ois.readObject();
+			ret = (Campeonato)ois.readObject();
+			
 		}
 		catch(Exception e)
 		{
 			e.printStackTrace();
+			ret = new Campeonato();
 		}
-		return null;
+		return ret;
 	}
 	
 	
@@ -60,9 +63,9 @@ public class Serializacion
 		
 		Campeonato c1 = new Campeonato();
 		
-		c1.agregarPiloto(1, "Fran");
-		c1.agregarPiloto(2, "Juan");
-		c1.agregarPiloto(3, "Santi");
+		c1.agregarPiloto("1", "Fran");
+		c1.agregarPiloto("2", "Juan");
+		c1.agregarPiloto("3", "Santi");
 		c1.agregarCarrera("San Miguel", "10");
 		c1.agregarCarrera("Polvorines", "11");
 		c1.agregarCarrera("Malvinas Arg.", "12");

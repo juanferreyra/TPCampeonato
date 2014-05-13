@@ -56,7 +56,7 @@ public class Campeonato implements Serializable
 	////METODOS////
 	
 	//Agrega un piloto a la lista de pilotos
-	public void agregarPiloto(int numero, String nombre)
+	public void agregarPiloto(String numero, String nombre)
 	{
 		Piloto p = new Piloto(nombre, numero);
 		if(pilotos.contains(p))

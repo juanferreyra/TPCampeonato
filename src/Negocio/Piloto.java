@@ -5,14 +5,14 @@ import java.io.Serializable;
 public class Piloto implements Serializable
 {
 	private String nombre;
-	private int numero;
+	private String numero;
 	private int cantidadDeSobrepasos;
 	protected int puntos;
 	protected double tiempoClasificacion;///*CREO QUE ESTA VARIABLE NO SIRVE PARA NADA*////
 	protected Integer PosicionFinal;
 	
 	////CONSTRUCTOR////
-	public Piloto(String nombre, int numero)
+	public Piloto(String nombre, String numero)
 	{
 		this.nombre = nombre;
 		this.numero = numero;
@@ -31,12 +31,12 @@ public class Piloto implements Serializable
 		this.nombre = nombre;
 	}
 
-	public int getNumero() 
+	public String getNumero() 
 	{
 		return numero;
 	}
 
-	public void setNumero(int numero) 
+	public void setNumero(String numero) 
 	{
 		this.numero = numero;
 	}

@@ -16,18 +16,21 @@ import javax.swing.JList;
 import javax.swing.JLabel;
 
 import java.awt.Font;
+import java.io.Serializable;
 
 import javax.swing.SwingConstants;
 
 import Negocio.Campeonato;
+import Persistencia.Serializacion;
 
-public class MainFrame 
+public class MainFrame implements Serializable
 {
 
 	private JFrame frmCampeonatoAutomovilistico;
-	private Campeonato _campeonato;
-	private FormAgrClasificacion _agrClasificacion;
-	private FormAgrFinalizacion _agrFinalizacion;
+	protected Campeonato _campeonato;
+	private MainFrame _this;
+	//private FormAgrClasificacion _agrClasificacion;
+	//private FormAgrFinalizacion _agrFinalizacion;
 
 	/**
 	 * Launch the application.
@@ -48,6 +51,7 @@ public class MainFrame
 				}
 			}
 		});
+	
 	}
 
 	/**
@@ -65,9 +69,13 @@ public class MainFrame
 			e.printStackTrace();
 		}
 		_campeonato = new Campeonato();
-		_agrClasificacion = new FormAgrClasificacion();
-		_agrFinalizacion = new FormAgrFinalizacion();
+	//	_agrClasificacion = new FormAgrClasificacion();
+		//_agrFinalizacion = new FormAgrFinalizacion();
+		Serializacion.cargar("dato.txt");
 		initialize();
+		//Guarda los datos del programa en un archivo de texto
+		//para que no se pierdan al cerrar el programa.
+		Serializacion.guardar(_campeonato, "dato.txt");
 	}
 
 	/**
@@ -75,6 +83,9 @@ public class MainFrame
 	 */
 	private void initialize() 
 	{
+
+		_this = this;
+		
 		frmCampeonatoAutomovilistico = new JFrame();
 		frmCampeonatoAutomovilistico.setTitle("Campeonato Automovilistico");
 		frmCampeonatoAutomovilistico.setResizable(false);
@@ -85,6 +96,8 @@ public class MainFrame
 		JList listCarreras = new JList();
 		listCarreras.setBounds(276, 23, 96, 262);
 		frmCampeonatoAutomovilistico.getContentPane().add(listCarreras);
+		
+		
 		
 		JLabel lblCarreras = new JLabel("Carreras");
 		lblCarreras.setHorizontalAlignment(SwingConstants.CENTER);
@@ -100,7 +113,7 @@ public class MainFrame
 		{
 			public void actionPerformed(ActionEvent arg0) 
 			{
-				_agrFinalizacion.setVisible(true);
+			//	_agrFinalizacion.setVisible(true);
 				//TODO:deberia hacer que ingrese los resultados finales de la carrera
 			}
 		});
@@ -112,7 +125,7 @@ public class MainFrame
 		{
 			public void actionPerformed(ActionEvent arg0) 
 			{
-				_agrClasificacion.setVisible(true);
+			//	_agrClasificacion.setVisible(true);
 				//TODO:deberia hacer que ingrese los resultados y tiempos de clasificacion
 			}
 		});
@@ -125,9 +138,27 @@ public class MainFrame
 		
 		JMenuItem mntmPiloto = new JMenuItem("Piloto");
 		mnIngresar.add(mntmPiloto);
+		mntmPiloto.addActionListener(new ActionListener() 
+		{
+			public void actionPerformed(ActionEvent e) 
+			{	
+				//Se abre la ventana de carga de pilotos
+				CargaPiloto p = new CargaPiloto(_this);
+				p.setVisible(true);
+			}
+		});
 		
 		JMenuItem mntmEvento = new JMenuItem("Evento");
 		mnIngresar.add(mntmEvento);
+		mntmEvento.addActionListener(new ActionListener() 
+		{
+				public void actionPerformed(ActionEvent arg0) 
+				{
+					//Se abre la ventana de carga de carreras
+					CargaCarrera c = new CargaCarrera(_this);
+					c.setVisible(true);
+				}
+		});
 		
 		JMenu mnVer = new JMenu("Ver");
 		menuBar.add(mnVer);
