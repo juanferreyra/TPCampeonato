@@ -14,7 +14,8 @@ import java.awt.Font;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class CargaCarrera extends JDialog {
+public class CargaCarrera extends JDialog 
+{
 
 	private final JPanel contentPanel = new JPanel();
 	private JTextField textAutodromo;
@@ -25,12 +26,16 @@ public class CargaCarrera extends JDialog {
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
-		try {
+	public static void main(String[] args) 
+	{
+		try 
+		{
 			CargaCarrera dialog = new CargaCarrera(null);
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
-		} catch (Exception e) {
+		} 
+		catch (Exception e) 
+		{
 			e.printStackTrace();
 		}
 	}
@@ -38,7 +43,8 @@ public class CargaCarrera extends JDialog {
 	/**
 	 * Create the dialog.
 	 */
-	public CargaCarrera(final MainFrame m) {
+	public CargaCarrera(final MainFrame m) 
+	{
 		setTitle("Ingrese una Carrera");
 		setBounds(100, 100, 450, 300);
 		getContentPane().setLayout(new BorderLayout());
@@ -95,26 +101,32 @@ public class CargaCarrera extends JDialog {
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
 				JButton okButton = new JButton("OK");
-				okButton.addActionListener(new ActionListener() {
+				okButton.addActionListener(new ActionListener() 
+				{
 					public void actionPerformed(ActionEvent arg0) 
 					{
 						String fecha = textDia.getText() + "/" +  textMes.getText() +"/" +  textAnio.getText();
-						m._campeonato.agregarCarrera(textAutodromo.getText(), fecha);
 						if(textAutodromo.getText().length() < 1 || textDia.getText().length() < 1
-								|| textMes.getText().length() < 1 || textAnio.getText().length() <1)
-							JOptionPane.showMessageDialog(null, "Error! Ingrese un dato valido", "Error", JOptionPane.ERROR_MESSAGE);
-						
-					
-						dispose();
+								|| textMes.getText().length() < 1 || textAnio.getText().length() <1)//se deberia cambiar por una funcion que se llame fechaValida(String fecha) o algo asi
+						{
+							JOptionPane.showMessageDialog(null, "Debe ingresar todos los datos solicitados");
+						}
+						else
+						{
+							m._campeonato.agregarCarrera(textAutodromo.getText(), fecha);
+							m.actualizarLista();
+							dispose();//va aqui adentro por que es el que oculta este JDialog
+						}
+							
 					}
 				});
-				okButton.setActionCommand("OK");
+				okButton.setActionCommand("Ok");
 				buttonPane.add(okButton);
 				getRootPane().setDefaultButton(okButton);
 			}
 			{
-				JButton cancelButton = new JButton("Cancel");
-				cancelButton.setActionCommand("Cancel");
+				JButton cancelButton = new JButton("Cancelar");
+				cancelButton.setActionCommand("Cancelar");
 				buttonPane.add(cancelButton);
 			}
 		}

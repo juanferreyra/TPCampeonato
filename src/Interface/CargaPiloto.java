@@ -69,26 +69,28 @@ public class CargaPiloto extends JDialog {
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
-				JButton okButton = new JButton("OK");
+				JButton okButton = new JButton("Ok");
 				okButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) 
 					{
-						m._campeonato.agregarPiloto(textNumero.getText(), textNombre.getText());
 						if(textNumero.getText().length() < 1 || textNombre.getText().length() < 1)
-							JOptionPane.showMessageDialog(null, "Error! Ingrese un dato valido", "Error", JOptionPane.ERROR_MESSAGE);
-						
-					
-						dispose();
-						
+						{
+							JOptionPane.showMessageDialog(null, "Debe ingresar todos los datos solicitados");
+						}
+						else
+						{
+							m._campeonato.agregarPiloto(textNumero.getText(), textNombre.getText());
+							dispose();
+						}
 					}
 				});
-				okButton.setActionCommand("OK");
+				okButton.setActionCommand("Ok");
 				buttonPane.add(okButton);
 				getRootPane().setDefaultButton(okButton);
 			}
 			{
-				JButton cancelButton = new JButton("Cancel");
-				cancelButton.setActionCommand("Cancel");
+				JButton cancelButton = new JButton("Cancelar");
+				cancelButton.setActionCommand("Cancelar");
 				buttonPane.add(cancelButton);
 			}
 		}
