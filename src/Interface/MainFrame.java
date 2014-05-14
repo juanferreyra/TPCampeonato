@@ -42,7 +42,7 @@ public class MainFrame implements Serializable
 	private MainFrame _this;
 	private FormAgrClasificacion _agrClasificacion;
 	private FormAgrFinalizacion _agrFinalizacion;
-	public JList<String> _listCarreras;
+	public JList _listCarreras;
 
 	/**
 	 * Launch the application.
@@ -83,7 +83,7 @@ public class MainFrame implements Serializable
 		_campeonato = new Campeonato();
 		_agrClasificacion = new FormAgrClasificacion();
 		_agrFinalizacion = new FormAgrFinalizacion();
-		_listCarreras = new JList<String>();
+		_listCarreras = new JList();
 		_listCarreras.addMouseListener(new MouseAdapter() 
 		{
 			@Override
@@ -208,7 +208,7 @@ public class MainFrame implements Serializable
 	
 	public void actualizarLista()
 	{
-		DefaultListModel<String> model = new DefaultListModel<String>(); 
+		DefaultListModel model = new DefaultListModel(); 
 		for(int i=0; i<_campeonato.getCarreras().size(); i++)
 		{ 
 			model.addElement(_campeonato.getCarreras().get(i).getAutodromo()); 
