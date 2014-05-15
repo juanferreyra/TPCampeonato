@@ -29,8 +29,8 @@ public class MainFrame implements Serializable
 	private JFrame frmCampeonatoAutomovilistico;
 	protected Campeonato _campeonato;
 	private MainFrame _this;
-	//private FormAgrClasificacion _agrClasificacion;
-	//private FormAgrFinalizacion _agrFinalizacion;
+	private FormAgrClasificacion _agrClasificacion;
+	private FormAgrFinalizacion _agrFinalizacion;
 
 	/**
 	 * Launch the application.
@@ -69,8 +69,8 @@ public class MainFrame implements Serializable
 			e.printStackTrace();
 		}
 		_campeonato = new Campeonato();
-	//	_agrClasificacion = new FormAgrClasificacion();
-		//_agrFinalizacion = new FormAgrFinalizacion();
+		_agrClasificacion = new FormAgrClasificacion();
+		_agrFinalizacion = new FormAgrFinalizacion();
 		Serializacion.cargar("dato.txt");
 		initialize();
 		//Guarda los datos del programa en un archivo de texto
@@ -113,7 +113,7 @@ public class MainFrame implements Serializable
 		{
 			public void actionPerformed(ActionEvent arg0) 
 			{
-			//	_agrFinalizacion.setVisible(true);
+				_agrFinalizacion.setVisible(true);
 				//TODO:deberia hacer que ingrese los resultados finales de la carrera
 			}
 		});
@@ -125,7 +125,7 @@ public class MainFrame implements Serializable
 		{
 			public void actionPerformed(ActionEvent arg0) 
 			{
-			//	_agrClasificacion.setVisible(true);
+				_agrClasificacion.setVisible(true);
 				//TODO:deberia hacer que ingrese los resultados y tiempos de clasificacion
 			}
 		});
