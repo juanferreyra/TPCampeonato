@@ -53,7 +53,7 @@ public class Carrera implements Serializable
 	
 	
 	//Toma un piloto con su tiempo de clasificacion y
-	//lo guarda una copia de el en resultado
+	//lo guarda una copia de el resultado
 	//en el orden de mejor a peor clasificado
 	public void agregarClasificacion(Piloto p, double tiempo)
 	{

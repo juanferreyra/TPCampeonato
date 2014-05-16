@@ -7,7 +7,7 @@ public class Piloto implements Serializable
 	private String nombre;
 	private String numero;
 	private int cantidadDeSobrepasos;
-	protected int puntos;
+	public Integer puntos;
 	protected double tiempoClasificacion;///*CREO QUE ESTA VARIABLE NO SIRVE PARA NADA*////
 	protected Integer PosicionFinal;
 	
