@@ -10,6 +10,9 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+
+import Persistencia.Serializacion;
+
 import java.awt.Font;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -80,6 +83,7 @@ public class CargaPiloto extends JDialog {
 						else
 						{
 							m._campeonato.agregarPiloto(textNumero.getText(), textNombre.getText());
+							Serializacion.guardar(m._campeonato, "dato.txt");
 							dispose();
 						}
 					}

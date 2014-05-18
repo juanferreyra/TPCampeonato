@@ -45,9 +45,9 @@ public class MainFrame implements Serializable
 	protected Campeonato _campeonato;
 	//Almacena todos los datos del MainFrame en una variable
 	private MainFrame _this; 
-	private FormAgrClasificacion _agrClasificacion;
-	private FormAgrFinalizacion _agrFinalizacion;
 	public JList _listCarreras; 
+	public Integer _carreraSeleccionada;
+	
 	/**
 	 * Launch the application.
 	 */
@@ -84,21 +84,20 @@ public class MainFrame implements Serializable
 			System.out.println("No encuentro en look and feel");
 			e.printStackTrace();
 		}
-		
 		_campeonato = new Campeonato();
-		_agrClasificacion = new FormAgrClasificacion();
-		_agrFinalizacion = new FormAgrFinalizacion();
-		_listCarreras = new JList();
-
+		
 		//Carga los datos del campeonato previamente guardados
 		_campeonato = Serializacion.cargar("dato.txt");
+		_listCarreras = new JList();
+		_carreraSeleccionada = null;
+
 		//Actualiza la lista de carreras para mostrarlas al abrir el programa
 		actualizarLista();
-		
+
 		initialize();
 		//Guarda los datos del programa en un archivo de texto
 		//para que no se pierdan al cerrar el programa.
-		Serializacion.guardar(_campeonato, "dato.txt");
+		
 	}
 
 	/**
@@ -106,6 +105,7 @@ public class MainFrame implements Serializable
 	 */
 	private void initialize() 
 	{
+		
 
 		_this = this;
 				
@@ -131,7 +131,8 @@ public class MainFrame implements Serializable
 			@Override
 			public void mouseClicked(MouseEvent arg0)
 			{
-				JOptionPane.showMessageDialog(null, "Hiciste click en la carrera "+_listCarreras.getSelectedValue());
+				JOptionPane.showMessageDialog(null, "Seleccionaste el evento "+_listCarreras.getSelectedValue());
+				_carreraSeleccionada = _listCarreras.getSelectedIndex();
 			}
 		});
 		
@@ -144,38 +145,20 @@ public class MainFrame implements Serializable
 		lblCarreras.setBounds(99, 96, 96, 25);
 		frmCampeonatoAutomovilistico.getContentPane().add(lblCarreras);
 		
-		JButton btnFinalizacion = new JButton("Finalizacion");
-		btnFinalizacion.setBounds(155, 46, 119, 23);
-		frmCampeonatoAutomovilistico.getContentPane().add(btnFinalizacion);
-		btnFinalizacion.addActionListener(new ActionListener() 
-		{
-			public void actionPerformed(ActionEvent arg0) 
-			{
-				_agrFinalizacion.setVisible(true);
-				//TODO:deberia hacer que ingrese los resultados finales de la carrera
-			}
-		});
-		
-		JButton btnClasificacion = new JButton("Clasificacion");
-		btnClasificacion.setBounds(10, 46, 124, 23);
-		frmCampeonatoAutomovilistico.getContentPane().add(btnClasificacion);
-		
-		JLabel lblResultados = new JLabel("Resultados");
-		lblResultados.setBackground(Color.WHITE);
-		lblResultados.setForeground(Color.BLACK);
-		lblResultados.setHorizontalAlignment(SwingConstants.CENTER);
-		lblResultados.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblResultados.setEnabled(false);
-		lblResultados.setBounds(19, 0, 265, 25);
-		frmCampeonatoAutomovilistico.getContentPane().add(lblResultados);
-		btnClasificacion.addActionListener(new ActionListener() 
+		JButton btnResultados = new JButton("Agregar Resultados");
+		btnResultados.setForeground(new Color(0, 0, 0));
+		btnResultados.setFont(new Font("Tahoma", Font.ITALIC, 12));
+		btnResultados.setToolTipText("Permite agregar los resultados de una carrera\r\n");
+		btnResultados.setBounds(80, 33, 138, 38);
+		frmCampeonatoAutomovilistico.getContentPane().add(btnResultados);
+		btnResultados.addActionListener(new ActionListener() 
 		{
 			public void actionPerformed(ActionEvent arg0) 
 			{
 
 				
-
-				_agrClasificacion.setVisible(true);
+				FormResultados r = new FormResultados(_this);
+				r.setVisible(true);
 
 				//TODO:deberia hacer que ingrese los resultados y tiempos de clasificacion
 			}
@@ -200,7 +183,7 @@ public class MainFrame implements Serializable
 			}
 		});
 		
-		JMenuItem mntmEvento = new JMenuItem("Evento");
+		JMenuItem mntmEvento = new JMenuItem("Carrera");
 		mnIngresar.add(mntmEvento);
 		mntmEvento.addActionListener(new ActionListener() 
 		{
@@ -226,7 +209,7 @@ public class MainFrame implements Serializable
 				}
 		});
 		
-		JMenuItem mntmRankingSobrepasos = new JMenuItem("Ranking de Sobrepasos");
+		JMenuItem mntmRankingSobrepasos = new JMenuItem("Tabla de Sobrepasos");
 		mnVer.add(mntmRankingSobrepasos);
 		mntmRankingSobrepasos.addActionListener(new ActionListener() 
 		{
@@ -236,6 +219,7 @@ public class MainFrame implements Serializable
 					ts.setVisible(true);
 				}
 		});
+		
 	}
 	
 	//Se encarga de agregar al JList de Carreras que se ve en pantalla
@@ -245,7 +229,7 @@ public class MainFrame implements Serializable
 		DefaultListModel model = new DefaultListModel(); 
 		for(int i=0; i<_campeonato.getCarreras().size(); i++)
 		{ 
-			model.addElement(_campeonato.getCarreras().get(i).getAutodromo()); 
+			model.add(i,_campeonato.getCarreras().get(i).toString()); 
 		}
 		_listCarreras.setModel(model);
 	}

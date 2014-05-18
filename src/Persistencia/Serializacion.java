@@ -61,7 +61,7 @@ public class Serializacion
 	public static void main(String[] args) 
 	{
 		
-		Campeonato c1 = new Campeonato();
+	/*	Campeonato c1 = new Campeonato();
 		
 		c1.agregarPiloto("1", "Fran");
 		c1.agregarPiloto("2", "Juan");
@@ -78,7 +78,7 @@ public class Serializacion
 		{
 			System.out.println(a.getPilotos().get(i).getNombre());
 			
-		}
+		}*/
 		
 		
 	}

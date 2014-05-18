@@ -46,29 +46,24 @@ public class Carrera implements Serializable
 	
 	////METODOS////
 	
+	
 	public boolean equals(Carrera otra)
 	{
 		return (this.fecha.equals(otra.fecha) && this.autodromo.equals(otra.autodromo));
 	}
 	
 	
-	//Toma un piloto con su tiempo de clasificacion y
-	//lo guarda una copia de el resultado
-	//en el orden de mejor a peor clasificado
-	public void agregarClasificacion(Piloto p, double tiempo)
+	public String toString()
 	{
-			
-			Piloto copia = new Piloto(p.getNombre(), p.getNumero());
-			copia.tiempoClasificacion = tiempo;
-			resultado.add(copia);
-		
+		return "AUTODROMO : " + autodromo + "  -  " + "FECHA : " + fecha;
 	}
 	
-	//Toma un piloto con su posicion final en la carrera,
-	// y lo guarda una copia de el en resultado.
-	public void agregarPosicionFinal(Piloto p, int posicion)
+	
+	//Toma un piloto con su posicion final en la carrera, y su
+	// tiempo de clasificacion y guarda una copia de el en resultado.
+	public void agregarResultado(Piloto p, int posicion, double tiempo)
 	{
-		//Primero se fija si el array de resultados ya contiene una copia de el piloto
+		//Se fija si el array de resultados ya contiene una copia de el piloto
 		//para no guardarlo duplicado.
 		if(resultado.contains(p))
 		{
@@ -77,6 +72,7 @@ public class Carrera implements Serializable
 				if(resultado.get(i).equals(p) )
 				{
 					resultado.get(i).PosicionFinal= posicion;
+					resultado.get(i).tiempoClasificacion = tiempo;
 				}
 			}
 			
@@ -85,9 +81,30 @@ public class Carrera implements Serializable
 		{	
 			Piloto copia = new Piloto(p.getNombre(), p.getNumero());
 			copia.PosicionFinal = posicion;
+			copia.tiempoClasificacion = tiempo;
 			resultado.add(copia);
 		}
 		
+	}
+	
+	//Ordena el array de resultados teniendo en cuenta
+	//el tiempo de clasificacion de menor a mayor
+	public void ordenarResultados()
+	{
+		for (int i = resultado.size()-1; i > 0; i--) 
+		{
+			for (int j = 0; j < i; j++) 
+			{
+				if(resultado.get(j).tiempoClasificacion > resultado.get(j+1).tiempoClasificacion)
+				{
+					double aux = resultado.get(j).tiempoClasificacion;
+					resultado.get(j).tiempoClasificacion = resultado.get(j+1).tiempoClasificacion;
+					resultado.get(j+1).tiempoClasificacion = aux;
+				}
+				
+			}
+			
+		}
 	}
 	
 	
@@ -127,4 +144,12 @@ public class Carrera implements Serializable
 		estaFinalizada = true;
 	}
 
+	
+	public static void main(String[] args) 
+	{
+		
+		
+		
+	}
+	
 }
