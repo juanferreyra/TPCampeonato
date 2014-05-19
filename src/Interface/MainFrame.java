@@ -37,16 +37,17 @@ import javax.swing.JScrollPane;
 import javax.swing.JScrollBar;
 import javax.swing.ScrollPaneConstants;
 import java.awt.Toolkit;
+import javax.swing.JTextField;
 
 public class MainFrame implements Serializable
 {
-
-	private JFrame frmCampeonatoAutomovilistico;
-	protected Campeonato _campeonato;
 	//Almacena todos los datos del MainFrame en una variable
 	private MainFrame _this; 
+	private JFrame _frmCampeonatoAutomovilistico;
+	protected Campeonato _campeonato;
 	public JList _listCarreras; 
 	public Integer _carreraSeleccionada;
+	private JTextField _muestraCarreraSeleccionada;
 	
 	/**
 	 * Launch the application.
@@ -60,14 +61,14 @@ public class MainFrame implements Serializable
 				try 
 				{
 					MainFrame window = new MainFrame();
-					window.frmCampeonatoAutomovilistico.setVisible(true);
-				} catch (Exception e) 
+					window._frmCampeonatoAutomovilistico.setVisible(true);
+				} 
+				catch (Exception e) 
 				{
 					e.printStackTrace();
 				}
 			}
 		});
-	
 	}
 
 	/**
@@ -84,20 +85,13 @@ public class MainFrame implements Serializable
 			System.out.println("No encuentro en look and feel");
 			e.printStackTrace();
 		}
-		_campeonato = new Campeonato();
-		
-		//Carga los datos del campeonato previamente guardados
+		//Crea o Carga los datos del campeonato previamente guardados
 		_campeonato = Serializacion.cargar("dato.txt");
 		_listCarreras = new JList();
 		_carreraSeleccionada = null;
-
-		//Actualiza la lista de carreras para mostrarlas al abrir el programa
+		//Actualiza la lista de carreras para mostrarlas en JList al abrir el programa
 		actualizarLista();
-
 		initialize();
-		//Guarda los datos del programa en un archivo de texto
-		//para que no se pierdan al cerrar el programa.
-		
 	}
 
 	/**
@@ -109,20 +103,19 @@ public class MainFrame implements Serializable
 
 		_this = this;
 				
-		frmCampeonatoAutomovilistico = new JFrame();
-		frmCampeonatoAutomovilistico.setTitle("Campeonato Automovilistico");
-		frmCampeonatoAutomovilistico.setResizable(false);
-		frmCampeonatoAutomovilistico.setBounds(100, 100, 300, 334);
-		frmCampeonatoAutomovilistico.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frmCampeonatoAutomovilistico.getContentPane().setLayout(null);
+		_frmCampeonatoAutomovilistico = new JFrame();
+		_frmCampeonatoAutomovilistico.setTitle("Campeonato Automovilistico");
+		_frmCampeonatoAutomovilistico.setResizable(false);
+		_frmCampeonatoAutomovilistico.setBounds(100, 100, 300, 340);
+		_frmCampeonatoAutomovilistico.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		_frmCampeonatoAutomovilistico.getContentPane().setLayout(null);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 132, 274, 132);
-		frmCampeonatoAutomovilistico.getContentPane().add(scrollPane);
+		scrollPane.setBounds(10, 36, 274, 132);
+		_frmCampeonatoAutomovilistico.getContentPane().add(scrollPane);
 		
 		JScrollPane scrollPane_1 = new JScrollPane();
 		scrollPane.setViewportView(scrollPane_1);
-		
 		
 		scrollPane_1.setViewportView(_listCarreras);
 		//Agrega evento paar que reconozca cuando se hace click sobre una carrera
@@ -131,42 +124,57 @@ public class MainFrame implements Serializable
 			@Override
 			public void mouseClicked(MouseEvent arg0)
 			{
-				JOptionPane.showMessageDialog(null, "Seleccionaste el evento "+_listCarreras.getSelectedValue());
-				_carreraSeleccionada = _listCarreras.getSelectedIndex();
+				if(_listCarreras.getModel().getSize() > 0)
+				{
+					_carreraSeleccionada = _listCarreras.getSelectedIndex();
+					_muestraCarreraSeleccionada.setText(_campeonato.getCarreras().get(_carreraSeleccionada).getAutodromo()+" | "+_campeonato.getCarreras().get(_carreraSeleccionada).getFecha());
+					//JOptionPane.showMessageDialog(null, "Seleccionaste el evento "+_listCarreras.getSelectedValue());
+				}
 			}
 		});
 		
-		
+
 		JLabel lblCarreras = new JLabel("Carreras");
 		lblCarreras.setForeground(new Color(102, 153, 0));
 		lblCarreras.setHorizontalAlignment(SwingConstants.CENTER);
 		lblCarreras.setEnabled(false);
 		lblCarreras.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblCarreras.setBounds(99, 96, 96, 25);
-		frmCampeonatoAutomovilistico.getContentPane().add(lblCarreras);
+		lblCarreras.setBounds(96, 11, 96, 25);
+		_frmCampeonatoAutomovilistico.getContentPane().add(lblCarreras);
 		
 		JButton btnResultados = new JButton("Agregar Resultados");
 		btnResultados.setForeground(new Color(0, 0, 0));
 		btnResultados.setFont(new Font("Tahoma", Font.ITALIC, 12));
 		btnResultados.setToolTipText("Permite agregar los resultados de una carrera\r\n");
-		btnResultados.setBounds(80, 33, 138, 38);
-		frmCampeonatoAutomovilistico.getContentPane().add(btnResultados);
+		btnResultados.setBounds(78, 227, 138, 38);
+		_frmCampeonatoAutomovilistico.getContentPane().add(btnResultados);
 		btnResultados.addActionListener(new ActionListener() 
 		{
 			public void actionPerformed(ActionEvent arg0) 
 			{
-
-				
-				FormResultados r = new FormResultados(_this);
-				r.setVisible(true);
-
-				//TODO:deberia hacer que ingrese los resultados y tiempos de clasificacion
+				if(_carreraSeleccionada==null)
+				{
+					JOptionPane.showMessageDialog(null, "Primero debe seleccionar una carrera de la lista");
+				}
+				else
+				{
+					if(_campeonato.getPilotos().size() == 0)
+					{
+						JOptionPane.showMessageDialog(null, "No hay ningun Piloto cargado");
+					}
+					else
+					{
+						FormResultados r = new FormResultados(_this);
+						r.setVisible(true);
+					}
+				}
 			}
 		});
 		
 		JMenuBar menuBar = new JMenuBar();
-		frmCampeonatoAutomovilistico.setJMenuBar(menuBar);
+		_frmCampeonatoAutomovilistico.setJMenuBar(menuBar);
 		
+		//apartado para ingresar pilotos o carrera
 		JMenu mnIngresar = new JMenu("Ingresar");
 		menuBar.add(mnIngresar);
 		
@@ -195,6 +203,7 @@ public class MainFrame implements Serializable
 				}
 		});
 		
+		//apartado para ver tablas de puntos
 		JMenu mnVer = new JMenu("Ver");
 		menuBar.add(mnVer);
 		
@@ -219,6 +228,18 @@ public class MainFrame implements Serializable
 					ts.setVisible(true);
 				}
 		});
+
+		
+		JLabel lblCarreraSeleccionada = new JLabel("Carrera seleccionada:");
+		lblCarreraSeleccionada.setBounds(10, 179, 108, 25);
+		
+		_frmCampeonatoAutomovilistico.getContentPane().add(lblCarreraSeleccionada);
+		_muestraCarreraSeleccionada = new JTextField();
+		_muestraCarreraSeleccionada.setToolTipText("Sobre esta carrera se puede agregar los resultados");
+		_muestraCarreraSeleccionada.setEditable(false);
+		_muestraCarreraSeleccionada.setBounds(119, 181, 165, 20);
+		_frmCampeonatoAutomovilistico.getContentPane().add(_muestraCarreraSeleccionada);
+		_muestraCarreraSeleccionada.setColumns(10);
 		
 	}
 	
