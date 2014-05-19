@@ -12,14 +12,27 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JScrollBar;
+
 import java.awt.ScrollPane;
+
 import javax.swing.JButton;
+import javax.swing.border.MatteBorder;
+
+import java.awt.Color;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+
+import javax.swing.JLabel;
+import javax.swing.JTextField;
+
+import Persistencia.Serializacion;
 
 public class FormResultados extends JFrame 
 {
 
 	private JPanel contentPane;
 	private JTable tabla;
+	private JTextField mostrarCarrera;
 
 	/**
 	 * Launch the application.
@@ -54,52 +67,74 @@ public class FormResultados extends JFrame
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+		JLabel lblCarrera = new JLabel("Carrera:");
+		lblCarrera.setBounds(10, 11, 48, 23);
+		contentPane.add(lblCarrera);
+		
+		mostrarCarrera = new JTextField();
+		mostrarCarrera.setEditable(false);
+		mostrarCarrera.setBounds(57, 12, 441, 20);
+		contentPane.add(mostrarCarrera);
+		mostrarCarrera.setColumns(10);
+		mostrarCarrera.setText(	m._campeonato.getCarreras().get(m._carreraSeleccionada).toString());
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(-2, 13, 509, 456);
+		scrollPane.setBounds(-2, 41, 509, 428);
 		contentPane.add(scrollPane);
 		
-		JScrollPane scrollPane_1 = new JScrollPane();
-		scrollPane.setViewportView(scrollPane_1);
-		
-				
-				
-				tabla = new JTable();
-				scrollPane_1.setColumnHeaderView(tabla);
-				
-				JButton btnGuardar = new JButton("Guardar");
-				btnGuardar.setBounds(299, 484, 89, 23);
-				contentPane.add(btnGuardar);
-				
-				JButton btnCancelar = new JButton("Cancelar");
-				btnCancelar.setBounds(397, 484, 89, 23);
-				contentPane.add(btnCancelar);
-		
-		DefaultTableModel modelo = new DefaultTableModel();
+		tabla = new JTable();
+		scrollPane.setViewportView(tabla);
+		final DefaultTableModel modelo = new DefaultTableModel();
 		modelo.addColumn("Piloto");
 		modelo.addColumn("Tiempo de Clasificacion");
 		modelo.addColumn("Posicion Final");
 		
-		
-		if(m._campeonato.getPilotos().size() == 0)
+		//Recorre la lista de Pilotos y los muestra en la tabla para agregar sus resultados en la carrera
+		for (int i = 0; i < m._campeonato.getPilotos().size(); i++)
 		{
-			JOptionPane.showMessageDialog(null, "No hay ningun Piloto cargado");
-		}
-		else
-		{
-			//Recorre la lista de Pilotos y los muestra en la tabla con su puntaje
-			for (int i = 0; i < m._campeonato.getPilotos().size(); i++) 
+			String nombrePiloto = m._campeonato.getPilotos().get(i).getNombre();
+			String clasificacionPilot = "0";
+			String posicionFinal = "0";
+			//chequeo que el piloto este en la carera asi muestro su clasificacion y su punto
+			if(m._campeonato.getCarreras().get(m._carreraSeleccionada).getResultado().contains(m._campeonato.getPilotos().get(i)))
 			{
-				String nombrePiloto = m._campeonato.getPilotos().get(i).getNombre();
-			
-				modelo.addRow(new String[] {nombrePiloto});
+				nombrePiloto = m._campeonato.getCarreras().get(m._carreraSeleccionada).getResultado().get(i).getNombre();
+				clasificacionPilot = String.valueOf(m._campeonato.getCarreras().get(m._carreraSeleccionada).getResultado().get(i).getTiempoClasificacion());
+				posicionFinal = String.valueOf(m._campeonato.getCarreras().get(m._carreraSeleccionada).getResultado().get(i).getPosicionFinal());	
 			}
+			modelo.addRow(new String[] {nombrePiloto,clasificacionPilot,posicionFinal});
+		}
 		
 		tabla.setModel(modelo);
-		dispose();	
-		}
 		
+		JButton btnGuardar = new JButton("Guardar");
+		btnGuardar.setBounds(299, 484, 89, 23);
+		contentPane.add(btnGuardar);
+		btnGuardar.addActionListener(new ActionListener() 
+		{
+			public void actionPerformed(ActionEvent arg0) 
+			{
+				//se entiende que en la posicion N°1 estan los tiempos de clasificacion y en la posicion N°2 los resultados
+				for (int i = 0; i < m._campeonato.getPilotos().size(); i++) 
+				{
+					m._campeonato.getCarreras().get(m._carreraSeleccionada).agregarResultado(m._campeonato.getPilotos().get(i),Double.parseDouble(modelo.getValueAt(i, 1).toString()), Integer.parseInt(modelo.getValueAt(i, 2).toString()));
+				}
+				m._campeonato.getCarreras().get(m._carreraSeleccionada).ordenarResultados();
+				Serializacion.guardar(m._campeonato, "dato.txt");
+				//JOptionPane.showMessageDialog(null, "La carrera quedo de la siguiente forma: "+m._campeonato.getCarreras().get(m._carreraSeleccionada).imprimirPilotos());
+				dispose();
+			}
+		});
 		
-		
+		JButton btnCancelar = new JButton("Cancelar");
+		btnCancelar.setBounds(397, 484, 89, 23);
+		contentPane.add(btnCancelar);
+		btnCancelar.addActionListener(new ActionListener() 
+		{
+			public void actionPerformed(ActionEvent arg0) 
+			{
+				dispose();
+			}
+		});
 	}
 }
