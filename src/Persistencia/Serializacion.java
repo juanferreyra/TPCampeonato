@@ -33,7 +33,6 @@ public class Serializacion
 		{	
 			e.printStackTrace();
 		}
-			
 	}
 	
 	//Extrae los datos que tiene el archivo pasado como parametro,
@@ -51,7 +50,7 @@ public class Serializacion
 		}
 		catch(Exception e)
 		{
-			e.printStackTrace();
+			//e.printStackTrace();
 			ret = new Campeonato();
 		}
 		return ret;
