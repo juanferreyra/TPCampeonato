@@ -10,7 +10,6 @@ public class Carrera implements Serializable
 	protected ArrayList<Piloto> resultado; //Almacena los pilotos con los resultados de la carrera.
 	protected boolean estaFinalizada;//Indica si finalizo la carrera
 	
-	
 	////CONSTRUCTOR////
 	public Carrera(String fecha, String autodromo)
 	{
@@ -20,7 +19,6 @@ public class Carrera implements Serializable
 		estaFinalizada = false;
 	}
 
-	
 	////GETTERS Y SETTERS////
 	public String getFecha()
 	{
@@ -41,27 +39,26 @@ public class Carrera implements Serializable
 	{
 		this.autodromo = autodromo;
 	}
+	
+	public ArrayList<Piloto> getResultado()
+	{
+		return resultado;
+	}
 
-	
-	
 	////METODOS////
-	
-	
 	public boolean equals(Carrera otra)
 	{
 		return (this.fecha.equals(otra.fecha) && this.autodromo.equals(otra.autodromo));
 	}
 	
-	
 	public String toString()
 	{
-		return "AUTODROMO : " + autodromo + "  -  " + "FECHA : " + fecha;
+		return "AUTODROMO: " + autodromo + "  -  " + "FECHA: " + fecha;
 	}
-	
 	
 	//Toma un piloto con su posicion final en la carrera, y su
 	// tiempo de clasificacion y guarda una copia de el en resultado.
-	public void agregarResultado(Piloto p, int posicion, double tiempo)
+	public void agregarResultado(Piloto p, double clasificacion, int posicion)
 	{
 		//Se fija si el array de resultados ya contiene una copia de el piloto
 		//para no guardarlo duplicado.
@@ -69,22 +66,20 @@ public class Carrera implements Serializable
 		{
 			for (int i = 0; i< resultado.size(); i++)
 			{
-				if(resultado.get(i).equals(p) )
+				if(resultado.get(i).equals(p))
 				{
-					resultado.get(i).PosicionFinal= posicion;
-					resultado.get(i).tiempoClasificacion = tiempo;
+					resultado.get(i).setTiempoClasificacion(clasificacion);
+					resultado.get(i).setPosicionFinal(posicion);
 				}
 			}
-			
 		}
 		else
 		{	
 			Piloto copia = new Piloto(p.getNombre(), p.getNumero());
-			copia.PosicionFinal = posicion;
-			copia.tiempoClasificacion = tiempo;
+			copia.setTiempoClasificacion(clasificacion);
+			copia.setPosicionFinal(posicion);			
 			resultado.add(copia);
 		}
-		
 	}
 	
 	//Ordena el array de resultados teniendo en cuenta
@@ -95,47 +90,41 @@ public class Carrera implements Serializable
 		{
 			for (int j = 0; j < i; j++) 
 			{
-				if(resultado.get(j).tiempoClasificacion > resultado.get(j+1).tiempoClasificacion)
+				if(resultado.get(j).getTiempoClasificacion() > resultado.get(j+1).getTiempoClasificacion())
 				{
-					double aux = resultado.get(j).tiempoClasificacion;
-					resultado.get(j).tiempoClasificacion = resultado.get(j+1).tiempoClasificacion;
-					resultado.get(j+1).tiempoClasificacion = aux;
+					Piloto aux = resultado.get(j);
+					resultado.set(j, resultado.get(j+1));
+					resultado.set(j+1 ,aux);
 				}
-				
 			}
-			
 		}
 	}
 	
-	
+	//no va a funcionar hasta que ordenemos el array
 	public Piloto mejorClasificado()
-	
 	{
 		return resultado.get(0);
 	}
 	
-	
 	public void calcularPuntos() 
 	{
-		mejorClasificado().puntos += 5;
+		mejorClasificado()._puntos += 5;
 		for(int i = 0; i < resultado.size(); i++)
 		{
-			resultado.get(i).puntos = resultado.size()/i+1;
+			resultado.get(i)._puntos = resultado.size()/i+1;
 		}
 	}
-	
 	
 	public void calcularSobrepasos()
 	{
 		for (int i = 0; i < resultado.size(); i++) 
 		{
 			//Si el tiempo de clasificacion menos la posicion final es positiva
-			if((i - resultado.get(i).PosicionFinal) > 0 )
+			if((i - resultado.get(i).getPosicionFinal()) > 0 )
 			{
 				//La cant. de sobrepasos es el tiempo de clasificacion menos la posicion final
-				resultado.get(i).setCantidadDeSobrepasos(i - resultado.get(i).PosicionFinal);
-			}	
-			
+				resultado.get(i).setCantidadDeSobrepasos(i - resultado.get(i).getPosicionFinal());
+			}
 		}
 	}
 	
@@ -143,13 +132,16 @@ public class Carrera implements Serializable
 	{
 		estaFinalizada = true;
 	}
-
 	
-	public static void main(String[] args) 
+	//funcion para testing
+	public String imprimirPilotos()
 	{
-		
-		
-		
+		String ret = "Plitos: ";
+		for (int i = 0; i < resultado.size(); i++) 
+		{
+			ret += "n°"+i+" :"+resultado.get(i).toString()+" ,";
+		}
+		return ret;
 	}
 	
 }

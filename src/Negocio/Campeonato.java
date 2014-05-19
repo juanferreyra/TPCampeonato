@@ -84,7 +84,7 @@ public class Campeonato implements Serializable
 			{
 				if(pilotos.get(j).equals(c.resultado.get(i)))
 				{
-					pilotos.get(j).puntos += c.resultado.get(i).puntos;
+					pilotos.get(j)._puntos += c.resultado.get(i)._puntos;
 				}
 			}
 			
@@ -114,8 +114,8 @@ public class Campeonato implements Serializable
 	public int carrerasCorridas()
 	{
 		int corridas= 0;
-		for (int i = 0; i < carreras.size(); i++) {
-			
+		for (int i = 0; i < carreras.size(); i++) 
+		{
 			if(carreras.get(i).estaFinalizada == true)
 			{
 				corridas++;

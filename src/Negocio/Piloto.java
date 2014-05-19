@@ -4,63 +4,87 @@ import java.io.Serializable;
 
 public class Piloto implements Serializable
 {
-	private String nombre;
-	private String numero;
-	private int cantidadDeSobrepasos;
-	public Integer puntos;
-	protected double tiempoClasificacion;///*CREO QUE ESTA VARIABLE NO SIRVE PARA NADA*////
-	protected Integer PosicionFinal;
+	private String _nombre;
+	private String _numero;
+	private int _cantidadDeSobrepasos;
+	public Integer _puntos;
+	private double _tiempoClasificacion;
+	private Integer _posicionFinal;
 	
 	////CONSTRUCTOR////
 	public Piloto(String nombre, String numero)
 	{
-		this.nombre = nombre;
-		this.numero = numero;
-		this.puntos = 0;
-		this.cantidadDeSobrepasos = 0;
+		_nombre = nombre;
+		_numero = numero;
+		_puntos = 0;
+		_cantidadDeSobrepasos = 0;
+		_tiempoClasificacion = 0;
+		
 	}
 
 	////GETTERS Y SETTERS////
 	public String getNombre() 
 	{
-		return nombre;
-	}
-
-	public void setNombre(String nombre) 
-	{
-		this.nombre = nombre;
+		return _nombre;
 	}
 
 	public String getNumero() 
 	{
-		return numero;
-	}
-
-	public void setNumero(String numero) 
-	{
-		this.numero = numero;
+		return _numero;
 	}
 
 	public int getCantidadDeSobrepasos() 
 	{	
-		return cantidadDeSobrepasos;
+		return _cantidadDeSobrepasos;
+	}
+	
+	public double getTiempoClasificacion()
+	{
+		return _tiempoClasificacion;
 	}
 
+	public Integer getPosicionFinal() 
+	{
+		return _posicionFinal;
+	}
+
+	public void setNombre(String nombre) 
+	{
+		_nombre = nombre;
+	}
+	
+	public void setNumero(String numero) 
+	{
+		_numero = numero;
+	}
+	
 	public void setCantidadDeSobrepasos(int cantidadDeSobrepasos) 
 	{
-		this.cantidadDeSobrepasos = cantidadDeSobrepasos;
+		_cantidadDeSobrepasos = cantidadDeSobrepasos;
 	}
 	
+	public void setTiempoClasificacion(double clasificacion) 
+	{
+		_tiempoClasificacion = clasificacion;	
+	}
+	
+	public void setPosicionFinal(Integer posicionFinal)
+	{
+		_posicionFinal = posicionFinal;
+	}
 	
 	////METODOS////
-	
-	
-	public boolean equals(Piloto otro) 
+	@Override 
+	public boolean equals(Object otro) 
 	{
-		return (this.nombre.equals(otro.nombre) && this.numero == otro.numero);
+		boolean result = false;
+		if(otro instanceof Piloto)
+			result = (_nombre.equals(((Piloto) otro).getNombre()) && _numero.equals(((Piloto) otro).getNumero()));
+		return result;
 	}
-	
-	
-	
-	
+
+	public String toString()
+	{
+		return "|| Nombre: "+_nombre+" Clasif: "+_tiempoClasificacion+" PosFinal: "+_posicionFinal;
+	}
 }
