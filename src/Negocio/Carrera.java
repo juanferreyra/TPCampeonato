@@ -8,7 +8,7 @@ public class Carrera implements Serializable
 	private String fecha;
 	private String autodromo;
 	protected ArrayList<Piloto> resultado; //Almacena los pilotos con los resultados de la carrera.
-	protected boolean estaFinalizada;//Indica si finalizo la carrera
+	public boolean estaFinalizada;//Indica si finalizo la carrera
 	
 	////CONSTRUCTOR////
 	public Carrera(String fecha, String autodromo)
@@ -84,7 +84,7 @@ public class Carrera implements Serializable
 	
 	//Ordena el array de resultados teniendo en cuenta
 	//el tiempo de clasificacion de menor a mayor
-	public void ordenarResultados()
+	private void ordenarResultados()
 	{
 		for (int i = resultado.size()-1; i > 0; i--) 
 		{
@@ -100,18 +100,21 @@ public class Carrera implements Serializable
 		}
 	}
 	
-	//no va a funcionar hasta que ordenemos el array
+	
 	public Piloto mejorClasificado()
 	{
 		return resultado.get(0);
 	}
 	
+	
 	public void calcularPuntos() 
 	{
+		this.ordenarResultados();
 		mejorClasificado()._puntos += 5;
 		for(int i = 0; i < resultado.size(); i++)
 		{
-			resultado.get(i)._puntos = resultado.size()/i+1;
+			int posicionFinal = resultado.get(i).getPosicionFinal();
+			resultado.get(i)._puntos += resultado.size()/(posicionFinal);
 		}
 	}
 	
@@ -128,10 +131,6 @@ public class Carrera implements Serializable
 		}
 	}
 	
-	public void CarreraCorrida()
-	{
-		estaFinalizada = true;
-	}
 	
 	//funcion para testing
 	public String imprimirPilotos()

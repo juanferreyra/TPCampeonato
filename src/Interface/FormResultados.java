@@ -25,6 +25,8 @@ import java.awt.event.ActionEvent;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
+import Negocio.Carrera;
+import Negocio.Piloto;
 import Persistencia.Serializacion;
 
 public class FormResultados extends JFrame 
@@ -61,6 +63,10 @@ public class FormResultados extends JFrame
 	 */
 	public FormResultados(final MainFrame m) 
 	{
+		//Carrera seleccionada para cargar sus resultados
+		final Carrera carreraSeleccionada = m._campeonato.getCarreras().get(m._carreraSeleccionada);
+		carreraSeleccionada.estaFinalizada = true;
+		
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 524, 558);
 		contentPane = new JPanel();
@@ -76,7 +82,7 @@ public class FormResultados extends JFrame
 		mostrarCarrera.setBounds(57, 12, 441, 20);
 		contentPane.add(mostrarCarrera);
 		mostrarCarrera.setColumns(10);
-		mostrarCarrera.setText(	m._campeonato.getCarreras().get(m._carreraSeleccionada).toString());
+		mostrarCarrera.setText(	carreraSeleccionada.toString());
 		
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(-2, 41, 509, 428);
@@ -89,18 +95,19 @@ public class FormResultados extends JFrame
 		modelo.addColumn("Tiempo de Clasificacion");
 		modelo.addColumn("Posicion Final");
 		
-		//Recorre la lista de Pilotos y los muestra en la tabla para agregar sus resultados en la carrera
+		//Recorre la lista de Pilotos del campeonato y los muestra en la tabla 
+		//para agregar sus resultados en la carrera
 		for (int i = 0; i < m._campeonato.getPilotos().size(); i++)
 		{
-			String nombrePiloto = m._campeonato.getPilotos().get(i).getNombre();
-			String clasificacionPilot = "0";
+			String nombrePiloto =  m._campeonato.getPilotos().get(i).getNombre();
+			String clasificacionPilot= "0";
 			String posicionFinal = "0";
-			//chequeo que el piloto este en la carera asi muestro su clasificacion y su punto
-			if(m._campeonato.getCarreras().get(m._carreraSeleccionada).getResultado().contains(m._campeonato.getPilotos().get(i)))
+			//Chequeo que el piloto este en la carera asi muestro su clasificacion y sus puntos
+			if(carreraSeleccionada.getResultado().contains(m._campeonato.getPilotos().get(i)))
 			{
-				nombrePiloto = m._campeonato.getCarreras().get(m._carreraSeleccionada).getResultado().get(i).getNombre();
-				clasificacionPilot = String.valueOf(m._campeonato.getCarreras().get(m._carreraSeleccionada).getResultado().get(i).getTiempoClasificacion());
-				posicionFinal = String.valueOf(m._campeonato.getCarreras().get(m._carreraSeleccionada).getResultado().get(i).getPosicionFinal());	
+				 nombrePiloto = carreraSeleccionada.getResultado().get(i).getNombre();
+				 clasificacionPilot = String.valueOf(carreraSeleccionada.getResultado().get(i).getTiempoClasificacion());
+				 posicionFinal = String.valueOf(carreraSeleccionada.getResultado().get(i).getPosicionFinal());	
 			}
 			modelo.addRow(new String[] {nombrePiloto,clasificacionPilot,posicionFinal});
 		}
@@ -114,12 +121,24 @@ public class FormResultados extends JFrame
 		{
 			public void actionPerformed(ActionEvent arg0) 
 			{
-				//se entiende que en la posicion N°1 estan los tiempos de clasificacion y en la posicion N°2 los resultados
+				//Agrega los resultados de todos los pilotos a la carrera en cuestion
 				for (int i = 0; i < m._campeonato.getPilotos().size(); i++) 
 				{
-					m._campeonato.getCarreras().get(m._carreraSeleccionada).agregarResultado(m._campeonato.getPilotos().get(i),Double.parseDouble(modelo.getValueAt(i, 1).toString()), Integer.parseInt(modelo.getValueAt(i, 2).toString()));
+					Piloto piloto = m._campeonato.getPilotos().get(i);
+					Double tiempoClasificacion = Double.parseDouble(modelo.getValueAt(i, 1).toString());
+					Integer posicionFinal = Integer.parseInt(modelo.getValueAt(i, 2).toString());
+					
+					carreraSeleccionada.agregarResultado(piloto ,tiempoClasificacion, posicionFinal);
 				}
-				m._campeonato.getCarreras().get(m._carreraSeleccionada).ordenarResultados();
+			
+				//Calcula los puntos obtenidos en la carrera seleccionda
+				//segun las posiciones finales de los pilotos
+				carreraSeleccionada.calcularPuntos();
+				System.out.println(carreraSeleccionada.getResultado().get(0)._puntos);
+				//Calcula los sobrepasos de cada piloto en la carrera seleccionada
+				carreraSeleccionada.calcularSobrepasos();
+				//Actualiza el puntaje global de campeonato
+				m._campeonato.actualizarPuntaje(carreraSeleccionada);
 				Serializacion.guardar(m._campeonato, "dato.txt");
 				//JOptionPane.showMessageDialog(null, "La carrera quedo de la siguiente forma: "+m._campeonato.getCarreras().get(m._carreraSeleccionada).imprimirPilotos());
 				dispose();

@@ -74,7 +74,7 @@ public class Campeonato implements Serializable
 	}
 	
 	
-	//Actualiza los puntos de los pilotos luego de
+	//Actualiza los puntos y los sobrepasos de los pilotos luego de
 	//correrse una carrera.
 	public void actualizarPuntaje(Carrera c)
 	{
@@ -85,6 +85,8 @@ public class Campeonato implements Serializable
 				if(pilotos.get(j).equals(c.resultado.get(i)))
 				{
 					pilotos.get(j)._puntos += c.resultado.get(i)._puntos;
+					pilotos.get(j).setCantidadDeSobrepasos((pilotos.get(j).getCantidadDeSobrepasos() + 
+							c.resultado.get(i).getCantidadDeSobrepasos()) / carrerasCorridas() );
 				}
 			}
 			

@@ -118,7 +118,7 @@ public class MainFrame implements Serializable
 		scrollPane.setViewportView(scrollPane_1);
 		
 		scrollPane_1.setViewportView(_listCarreras);
-		//Agrega evento paar que reconozca cuando se hace click sobre una carrera
+		//Agrega evento para que reconozca cuando se hace click sobre una carrera
 		_listCarreras.addMouseListener(new MouseAdapter() 
 		{
 			@Override
@@ -151,13 +151,16 @@ public class MainFrame implements Serializable
 		btnResultados.addActionListener(new ActionListener() 
 		{
 			public void actionPerformed(ActionEvent arg0) 
-			{
+			{	//Si no se selecciono ninguna carrera
+				//muestra un mensaje avisandolo
 				if(_carreraSeleccionada==null)
 				{
+					//Muestra un mensaje
 					JOptionPane.showMessageDialog(null, "Primero debe seleccionar una carrera de la lista");
 				}
 				else
-				{
+				{	//Si no hay ningun piloto cargado
+					//muestra un mensaje avisandolo
 					if(_campeonato.getPilotos().size() == 0)
 					{
 						JOptionPane.showMessageDialog(null, "No hay ningun Piloto cargado");
