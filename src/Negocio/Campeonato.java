@@ -7,9 +7,11 @@ import java.util.TreeMap;
 
 public class Campeonato implements Serializable
 {
-	private ArrayList<Carrera> carreras; //Almacena todas las carreras del campeonato
-	private ArrayList<Piloto> pilotos; //Almacena los pilotos que participan en el campeonato
-	private Map<Integer,Integer> campeonatoParalelo; 
+	//Almacena todas las carreras del campeonato
+	private ArrayList<Carrera> carreras;
+	//Almacena los pilotos que participan en el campeonato
+	private ArrayList<Piloto> pilotos; 
+	
 	
 	
 	////CONSTRUCTOR////
@@ -17,7 +19,7 @@ public class Campeonato implements Serializable
 	{
 		carreras = new ArrayList<Carrera>();
 		pilotos = new ArrayList<Piloto>();
-		campeonatoParalelo = new TreeMap<Integer, Integer>();
+		
 	}
 
 
@@ -42,15 +44,6 @@ public class Campeonato implements Serializable
 		this.pilotos = pilotos;
 	}
 
-	public Map<Integer, Integer> getCampeonatoParalelo() 
-	{
-		return campeonatoParalelo;
-	}
-
-	public void setCampeonatoParalelo(Map<Integer, Integer> campeonatoParalelo) 
-	{
-		this.campeonatoParalelo = campeonatoParalelo;
-	}
 	
 	
 	////METODOS////
@@ -85,32 +78,23 @@ public class Campeonato implements Serializable
 				if(pilotos.get(j).equals(c.resultado.get(i)))
 				{
 					pilotos.get(j)._puntos += c.resultado.get(i)._puntos;
-					pilotos.get(j).setCantidadDeSobrepasos((pilotos.get(j).getCantidadDeSobrepasos() + 
-							c.resultado.get(i).getCantidadDeSobrepasos()) / carrerasCorridas() );
+					actualizarPromedio(c, i, j);
 				}
 			}
 			
 		}
 	}
+
 	
-	
-	//Calcula el promedio de sobrepasos
-	//luego de correrse una carrera
-	public void calcularPromedio(Carrera c)
+	//Actualiza el promedio de sobrepasos de un piloto
+	private void actualizarPromedio(Carrera c, int i, int j) 
 	{
-		for (int i = 0; i < c.resultado.size();i++) 
-		{
-			for(int j = 0; j< pilotos.size(); j++ )
-			{
-				if(pilotos.get(j).equals(c.resultado.get(i)))
-				{
-					pilotos.get(j).setCantidadDeSobrepasos((pilotos.get(j).getCantidadDeSobrepasos() + 
-							c.resultado.get(i).getCantidadDeSobrepasos()) / carrerasCorridas() );
-				}
-			}
-			
-		}
+		pilotos.get(j).setCantidadDeSobrepasos((pilotos.get(j).getCantidadDeSobrepasos() + 
+				c.resultado.get(i).getCantidadDeSobrepasos()) / carrerasCorridas() );
 	}
+	
+	
+	
 	
 	
 	public int carrerasCorridas()

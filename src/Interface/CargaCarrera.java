@@ -108,18 +108,26 @@ public class CargaCarrera extends JDialog
 				{
 					public void actionPerformed(ActionEvent arg0) 
 					{
+						
 						String fecha = textDia.getText() + "/" +  textMes.getText() +"/" +  textAnio.getText();
-						if(textAutodromo.getText().length() < 1 || textDia.getText().length() < 1
-								|| textMes.getText().length() < 1 || textAnio.getText().length() <1)//se deberia cambiar por una funcion que se llame fechaValida(String fecha) o algo asi
+						
+						
+						if(faltanDatos(textAutodromo.getText(), textDia.getText(), textMes.getText(), textAnio.getText()))
 						{
 							JOptionPane.showMessageDialog(null, "Debe ingresar todos los datos solicitados");
 						}
+						else if(!fechaValida(fecha))
+						{
+							JOptionPane.showMessageDialog(null, "Debe ingresar una fecha valida");
+						}
+						//Agrega la carrera al campeonato
 						else
 						{
 							m._campeonato.agregarCarrera(textAutodromo.getText(), fecha);
 							m.actualizarLista();
+							//Guarda la carrera en el archivo de datos
 							Serializacion.guardar(m._campeonato, "dato.txt");
-							dispose();//va aqui adentro por que es el que oculta este JDialog
+							dispose();
 						}
 							
 					}
@@ -140,5 +148,18 @@ public class CargaCarrera extends JDialog
 				buttonPane.add(cancelButton);
 			}
 		}
+	}
+	
+	//Corrobora que la fecha ingresada sea valida
+	private static boolean fechaValida(String time) 
+	{
+		return time.matches("([0-2][1-9]|3[0-1])/(0[1-9]|1[0-2])/[0-9][0-9][0-9][0-9]");
+	}
+	
+	//Indica si hay algun dato de la carrera que no se haya ingresado
+	private boolean faltanDatos(String autodromo, String dia, String mes, String anio)
+	{
+		return (autodromo.length() < 1 || dia.length() < 1
+				|| mes.length() < 1 || anio.length() <1);
 	}
 }

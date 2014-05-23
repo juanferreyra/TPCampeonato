@@ -69,7 +69,7 @@ public class TablaSobrepasos extends JFrame {
 		}
 		else
 		{
-			//Recorre la lista de Pilotos y los muestra en la tabla con sus sobrepasos
+			//Recorre la lista de Pilotos y los muestra en la tabla con su respectivo promedio de sobrepasos
 			for (int i = 0; i < m._campeonato.getPilotos().size(); i++) 
 			{
 				String nombrePiloto = m._campeonato.getPilotos().get(i).getNombre();

@@ -57,7 +57,7 @@ public class Carrera implements Serializable
 	}
 	
 	//Toma un piloto con su posicion final en la carrera, y su
-	// tiempo de clasificacion y guarda una copia de el en resultado.
+	// tiempo de clasificacion y guarda una copia de el en la lista "resultado".
 	public void agregarResultado(Piloto p, double clasificacion, int posicion)
 	{
 		//Se fija si el array de resultados ya contiene una copia de el piloto
@@ -73,6 +73,7 @@ public class Carrera implements Serializable
 				}
 			}
 		}
+		//Copia el piloto el la lista de resultados de la carrera
 		else
 		{	
 			Piloto copia = new Piloto(p.getNombre(), p.getNumero());
@@ -83,7 +84,7 @@ public class Carrera implements Serializable
 	}
 	
 	//Ordena el array de resultados teniendo en cuenta
-	//el tiempo de clasificacion de menor a mayor
+	//el tiempo de clasificacion de menor a mayor tiempo
 	private void ordenarResultados()
 	{
 		for (int i = resultado.size()-1; i > 0; i--) 
@@ -106,10 +107,13 @@ public class Carrera implements Serializable
 		return resultado.get(0);
 	}
 	
-	
+	//Calcula los puntos que cada piloto obtiene al finalizar la carrera
+	//dependiendo de la posicion en la que finalizo 
 	public void calcularPuntos() 
 	{
+		//Ordena los resultados para conocer como clasificaron
 		this.ordenarResultados();
+		//Al piloto que clasifico primero se le otorgan 5 puntos adicionales
 		mejorClasificado()._puntos += 5;
 		for(int i = 0; i < resultado.size(); i++)
 		{
@@ -118,6 +122,7 @@ public class Carrera implements Serializable
 		}
 	}
 	
+	//Calcula los sobrepasos de cada piloto que participo en la carrera
 	public void calcularSobrepasos()
 	{
 		for (int i = 0; i < resultado.size(); i++) 
@@ -131,16 +136,5 @@ public class Carrera implements Serializable
 		}
 	}
 	
-	
-	//funcion para testing
-	public String imprimirPilotos()
-	{
-		String ret = "Plitos: ";
-		for (int i = 0; i < resultado.size(); i++) 
-		{
-			ret += "n°"+i+" :"+resultado.get(i).toString()+" ,";
-		}
-		return ret;
-	}
 	
 }

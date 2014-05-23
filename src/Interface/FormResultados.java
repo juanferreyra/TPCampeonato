@@ -29,11 +29,14 @@ import Negocio.Carrera;
 import Negocio.Piloto;
 import Persistencia.Serializacion;
 
+//Frame en el cual se ingresan los resultados de una carrera
 public class FormResultados extends JFrame 
 {
 
 	private JPanel contentPane;
 	private JTable tabla;
+	//Muestra el nombre de la carrera a la cual 
+	//se le estan agregando los resultados
 	private JTextField mostrarCarrera;
 
 	/**
@@ -124,6 +127,12 @@ public class FormResultados extends JFrame
 				//Agrega los resultados de todos los pilotos a la carrera en cuestion
 				for (int i = 0; i < m._campeonato.getPilotos().size(); i++) 
 				{
+					if(!esNumero(modelo.getValueAt(i,1).toString()) || !esNumero(modelo.getValueAt(i, 2).toString()))
+					{
+						JOptionPane.showMessageDialog(null, "Ingrese un dato valido");
+					}
+					
+					
 					Piloto piloto = m._campeonato.getPilotos().get(i);
 					Double tiempoClasificacion = Double.parseDouble(modelo.getValueAt(i, 1).toString());
 					Integer posicionFinal = Integer.parseInt(modelo.getValueAt(i, 2).toString());
@@ -134,11 +143,11 @@ public class FormResultados extends JFrame
 				//Calcula los puntos obtenidos en la carrera seleccionda
 				//segun las posiciones finales de los pilotos
 				carreraSeleccionada.calcularPuntos();
-				System.out.println(carreraSeleccionada.getResultado().get(0)._puntos);
 				//Calcula los sobrepasos de cada piloto en la carrera seleccionada
 				carreraSeleccionada.calcularSobrepasos();
 				//Actualiza el puntaje global de campeonato
 				m._campeonato.actualizarPuntaje(carreraSeleccionada);
+				//Guarda los resultados en el archivo de datos
 				Serializacion.guardar(m._campeonato, "dato.txt");
 				//JOptionPane.showMessageDialog(null, "La carrera quedo de la siguiente forma: "+m._campeonato.getCarreras().get(m._carreraSeleccionada).imprimirPilotos());
 				dispose();
@@ -155,5 +164,17 @@ public class FormResultados extends JFrame
 				dispose();
 			}
 		});
+	}
+	
+	
+	private boolean esNumero(String numero)
+	{
+		for (int i = 0; i < numero.length(); i++) 
+		{
+			if(numero.charAt(i) < 48 || numero.charAt(i) > 57 )
+				return false;
+		}
+		
+		return true;
 	}
 }

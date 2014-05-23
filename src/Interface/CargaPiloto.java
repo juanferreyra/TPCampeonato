@@ -76,13 +76,19 @@ public class CargaPiloto extends JDialog {
 				okButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) 
 					{
-						if(textNumero.getText().length() < 1 || textNombre.getText().length() < 1)
+						if(faltanDatos(textNombre.getText(), textNumero.getText()))
 						{
 							JOptionPane.showMessageDialog(null, "Debe ingresar todos los datos solicitados");
 						}
+						else if(!esNumero(textNumero.getText()))
+						{
+							JOptionPane.showMessageDialog(null, "El numero de piloto es erroneo");
+						}
+						//Agrega un piloto al campeonato
 						else
 						{
 							m._campeonato.agregarPiloto(textNumero.getText(), textNombre.getText());
+							//Guarda el piloto en el archivo de datos
 							Serializacion.guardar(m._campeonato, "dato.txt");
 							dispose();
 						}
@@ -105,4 +111,23 @@ public class CargaPiloto extends JDialog {
 			}
 		}
 	}
+	
+	//Indica si hay algun dato del piloto que no se haya ingresado
+		private boolean faltanDatos(String nombre, String numero)
+		{
+			return (nombre.length() < 1 || numero.length() < 1);
+		}
+		
+		
+		//Indica si el numero de piloto es valido
+		private boolean esNumero(String numero)
+		{
+			for (int i = 0; i < numero.length(); i++) 
+			{
+				if(numero.charAt(i) < 48 || numero.charAt(i) > 57 )
+					return false;
+			}
+			
+			return true;
+		}
 }

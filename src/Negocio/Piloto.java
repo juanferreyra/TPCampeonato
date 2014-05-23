@@ -8,7 +8,11 @@ public class Piloto implements Serializable
 	private String _numero;
 	private int _cantidadDeSobrepasos;
 	public Integer _puntos;
+	//Tiempo de clasificacion obtenido por el piloto
+	//en una determinada carrera
 	private double _tiempoClasificacion;
+	//Almacena la posicion en la que finalizo el piloto
+	//en determinada carrera
 	private Integer _posicionFinal;
 	
 	////CONSTRUCTOR////

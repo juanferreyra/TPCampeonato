@@ -38,15 +38,23 @@ import javax.swing.JScrollBar;
 import javax.swing.ScrollPaneConstants;
 import java.awt.Toolkit;
 import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
 
 public class MainFrame implements Serializable
 {
 	//Almacena todos los datos del MainFrame en una variable
-	private MainFrame _this; 
+	//de tipo MainFrame
+	private MainFrame _this;
+	//Frame principal
 	private JFrame _frmCampeonatoAutomovilistico;
+	//Variable que almacena el campeonato
 	protected Campeonato _campeonato;
-	public JList _listCarreras; 
+	//Muestra la lista de carreras en la interfaz
+	public JList _listCarreras;
+	//Es la carrera que se selecciono de la lista de carreras
+	//para cargarle sus resultados
 	public Integer _carreraSeleccionada;
+	//Muestra la carrera a la cual se le estan agregando los resultados
 	private JTextField _muestraCarreraSeleccionada;
 	
 	/**
@@ -86,10 +94,11 @@ public class MainFrame implements Serializable
 			e.printStackTrace();
 		}
 		//Crea o Carga los datos del campeonato previamente guardados
+		//en un archivo
 		_campeonato = Serializacion.cargar("dato.txt");
 		_listCarreras = new JList();
 		_carreraSeleccionada = null;
-		//Actualiza la lista de carreras para mostrarlas en JList al abrir el programa
+		//Actualiza la lista de carreras para mostrarlas en un JList al abrir el programa
 		actualizarLista();
 		initialize();
 	}
@@ -99,7 +108,10 @@ public class MainFrame implements Serializable
 	 */
 	private void initialize() 
 	{
-		
+		//Crea un panel que contiene la imagen de fondo
+		Panel p = new Panel();
+		p.setBorder(new EmptyBorder(5, 5, 5, 5));
+		p.setLayout(null);
 
 		_this = this;
 				
@@ -109,6 +121,7 @@ public class MainFrame implements Serializable
 		_frmCampeonatoAutomovilistico.setBounds(100, 100, 300, 340);
 		_frmCampeonatoAutomovilistico.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		_frmCampeonatoAutomovilistico.getContentPane().setLayout(null);
+		_frmCampeonatoAutomovilistico.setContentPane(p);
 		
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(10, 36, 274, 132);
@@ -128,7 +141,7 @@ public class MainFrame implements Serializable
 				{
 					_carreraSeleccionada = _listCarreras.getSelectedIndex();
 					_muestraCarreraSeleccionada.setText(_campeonato.getCarreras().get(_carreraSeleccionada).getAutodromo()+" | "+_campeonato.getCarreras().get(_carreraSeleccionada).getFecha());
-					//JOptionPane.showMessageDialog(null, "Seleccionaste el evento "+_listCarreras.getSelectedValue());
+					JOptionPane.showMessageDialog(null, "Seleccionaste el evento "+_listCarreras.getSelectedValue());
 				}
 			}
 		});
@@ -149,7 +162,7 @@ public class MainFrame implements Serializable
 		btnResultados.setBounds(78, 227, 138, 38);
 		_frmCampeonatoAutomovilistico.getContentPane().add(btnResultados);
 		btnResultados.addActionListener(new ActionListener() 
-		{
+		{ //Evento para agregar los resultados asociados a una carrera
 			public void actionPerformed(ActionEvent arg0) 
 			{	//Si no se selecciono ninguna carrera
 				//muestra un mensaje avisandolo
@@ -177,7 +190,7 @@ public class MainFrame implements Serializable
 		JMenuBar menuBar = new JMenuBar();
 		_frmCampeonatoAutomovilistico.setJMenuBar(menuBar);
 		
-		//apartado para ingresar pilotos o carrera
+		//Apartado para ingresar pilotos o carrera
 		JMenu mnIngresar = new JMenu("Ingresar");
 		menuBar.add(mnIngresar);
 		
@@ -206,7 +219,8 @@ public class MainFrame implements Serializable
 				}
 		});
 		
-		//apartado para ver tablas de puntos
+		//Apartado para ver tablas de puntos
+		// y de clasificaciones
 		JMenu mnVer = new JMenu("Ver");
 		menuBar.add(mnVer);
 		
@@ -246,6 +260,11 @@ public class MainFrame implements Serializable
 		
 	}
 	
+	private void setContentPane(Interface.Panel p) {
+		// TODO Auto-generated method stub
+		
+	}
+
 	//Se encarga de agregar al JList de Carreras que se ve en pantalla
 	//las carreras que se van agregando al campeonato
 	public void actualizarLista()
