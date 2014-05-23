@@ -103,7 +103,7 @@ public class FormResultados extends JFrame
 		for (int i = 0; i < m._campeonato.getPilotos().size(); i++)
 		{
 			String nombrePiloto =  m._campeonato.getPilotos().get(i).getNombre();
-			String clasificacionPilot= "0";
+			String clasificacionPilot= "0.0";
 			String posicionFinal = "0";
 			//Chequeo que el piloto este en la carera asi muestro su clasificacion y sus puntos
 			if(carreraSeleccionada.getResultado().contains(m._campeonato.getPilotos().get(i)))
@@ -129,9 +129,9 @@ public class FormResultados extends JFrame
 				{
 					if(!esNumero(modelo.getValueAt(i,1).toString()) || !esNumero(modelo.getValueAt(i, 2).toString()))
 					{
-						JOptionPane.showMessageDialog(null, "Ingrese un dato valido");
+						JOptionPane.showMessageDialog(null, "Por Favor! Ingrese los campos en su formato correcto",
+		                        "Error", JOptionPane.ERROR_MESSAGE);
 					}
-					
 					
 					Piloto piloto = m._campeonato.getPilotos().get(i);
 					Double tiempoClasificacion = Double.parseDouble(modelo.getValueAt(i, 1).toString());
@@ -149,7 +149,6 @@ public class FormResultados extends JFrame
 				m._campeonato.actualizarPuntaje(carreraSeleccionada);
 				//Guarda los resultados en el archivo de datos
 				Serializacion.guardar(m._campeonato, "dato.txt");
-				//JOptionPane.showMessageDialog(null, "La carrera quedo de la siguiente forma: "+m._campeonato.getCarreras().get(m._carreraSeleccionada).imprimirPilotos());
 				dispose();
 			}
 		});
@@ -166,15 +165,25 @@ public class FormResultados extends JFrame
 		});
 	}
 	
-	
-	private boolean esNumero(String numero)
+	private static boolean esNumero(String numero)
 	{
-		for (int i = 0; i < numero.length(); i++) 
+		try 
 		{
-			if(numero.charAt(i) < 48 || numero.charAt(i) > 57 )
+			Integer.parseInt(numero);
+			return true;
+		} 
+		catch (NumberFormatException nfe)
+		{
+			try
+			{
+				Double.parseDouble(numero);
+				return true;
+			}
+			catch (NumberFormatException nfe2)
+			{
 				return false;
+			}
 		}
-		
-		return true;
 	}
+	
 }
