@@ -103,7 +103,7 @@ public class CargaCarrera extends JDialog
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
-				JButton okButton = new JButton("OK");
+				JButton okButton = new JButton("Guardar");
 				okButton.addActionListener(new ActionListener() 
 				{
 					public void actionPerformed(ActionEvent arg0) 
@@ -127,24 +127,28 @@ public class CargaCarrera extends JDialog
 							m.actualizarLista();
 							//Guarda la carrera en el archivo de datos
 							Serializacion.guardar(m._campeonato, "dato.txt");
-							dispose();
+							textDia.setText("");
+							textMes.setText("");
+							textAnio.setText("");
+							textAutodromo.setText("");
+							textAutodromo.requestFocus();
 						}
 							
 					}
 				});
-				okButton.setActionCommand("Ok");
+				okButton.setActionCommand("Guardar");
 				buttonPane.add(okButton);
 				getRootPane().setDefaultButton(okButton);
 			}
 			{
-				JButton cancelButton = new JButton("Cancelar");
+				JButton cancelButton = new JButton("Cerrar");
 				cancelButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) 
 					{
 						dispose();
 					}
 				});
-				cancelButton.setActionCommand("Cancelar");
+				cancelButton.setActionCommand("Cerrar");
 				buttonPane.add(cancelButton);
 			}
 		}

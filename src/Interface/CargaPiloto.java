@@ -72,7 +72,7 @@ public class CargaPiloto extends JDialog {
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
-				JButton okButton = new JButton("Ok");
+				JButton okButton = new JButton("Guardar");
 				okButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) 
 					{
@@ -90,23 +90,25 @@ public class CargaPiloto extends JDialog {
 							m._campeonato.agregarPiloto(textNumero.getText(), textNombre.getText());
 							//Guarda el piloto en el archivo de datos
 							Serializacion.guardar(m._campeonato, "dato.txt");
-							dispose();
+							textNombre.setText("");
+							textNumero.setText("");
+							textNombre.requestFocus();
 						}
 					}
 				});
-				okButton.setActionCommand("Ok");
+				okButton.setActionCommand("Guardar");
 				buttonPane.add(okButton);
 				getRootPane().setDefaultButton(okButton);
 			}
 			{
-				JButton cancelButton = new JButton("Cancelar");
+				JButton cancelButton = new JButton("Cerrar");
 				cancelButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) 
 					{
 						dispose();
 					}
 				});
-				cancelButton.setActionCommand("Cancelar");
+				cancelButton.setActionCommand("Cerrar");
 				buttonPane.add(cancelButton);
 			}
 		}
