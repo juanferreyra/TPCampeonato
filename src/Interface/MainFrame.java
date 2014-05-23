@@ -39,6 +39,7 @@ import javax.swing.ScrollPaneConstants;
 import java.awt.Toolkit;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
+import javax.swing.ListSelectionModel;
 
 public class MainFrame implements Serializable
 {
@@ -97,6 +98,8 @@ public class MainFrame implements Serializable
 		//en un archivo
 		_campeonato = Serializacion.cargar("dato.txt");
 		_listCarreras = new JList();
+		_listCarreras.setBackground(new Color(245, 245, 245));
+		_listCarreras.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		_carreraSeleccionada = null;
 		//Actualiza la lista de carreras para mostrarlas en un JList al abrir el programa
 		actualizarLista();
@@ -124,7 +127,7 @@ public class MainFrame implements Serializable
 		_frmCampeonatoAutomovilistico.setContentPane(p);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 36, 274, 132);
+		scrollPane.setBounds(10, 25, 274, 143);
 		_frmCampeonatoAutomovilistico.getContentPane().add(scrollPane);
 		
 		JScrollPane scrollPane_1 = new JScrollPane();
@@ -141,21 +144,22 @@ public class MainFrame implements Serializable
 				{
 					_carreraSeleccionada = _listCarreras.getSelectedIndex();
 					_muestraCarreraSeleccionada.setText(_campeonato.getCarreras().get(_carreraSeleccionada).getAutodromo()+" | "+_campeonato.getCarreras().get(_carreraSeleccionada).getFecha());
-					JOptionPane.showMessageDialog(null, "Seleccionaste el evento "+_listCarreras.getSelectedValue());
+					//mensaje para ver si se en verdad selecciona una carrera
+					//JOptionPane.showMessageDialog(null, "Seleccionaste el evento "+_listCarreras.getSelectedValue());
 				}
 			}
 		});
-		
 
 		JLabel lblCarreras = new JLabel("Carreras");
-		lblCarreras.setForeground(new Color(102, 153, 0));
+		lblCarreras.setForeground(Color.BLACK);
 		lblCarreras.setHorizontalAlignment(SwingConstants.CENTER);
 		lblCarreras.setEnabled(false);
 		lblCarreras.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblCarreras.setBounds(96, 11, 96, 25);
+		lblCarreras.setBounds(97, 0, 96, 25);
 		_frmCampeonatoAutomovilistico.getContentPane().add(lblCarreras);
 		
 		JButton btnResultados = new JButton("Agregar Resultados");
+		btnResultados.setBackground(new Color(128, 128, 128));
 		btnResultados.setForeground(new Color(0, 0, 0));
 		btnResultados.setFont(new Font("Tahoma", Font.ITALIC, 12));
 		btnResultados.setToolTipText("Permite agregar los resultados de una carrera\r\n");
@@ -248,6 +252,7 @@ public class MainFrame implements Serializable
 
 		
 		JLabel lblCarreraSeleccionada = new JLabel("Carrera seleccionada:");
+		lblCarreraSeleccionada.setForeground(new Color(0, 0, 0));
 		lblCarreraSeleccionada.setBounds(10, 179, 108, 25);
 		
 		_frmCampeonatoAutomovilistico.getContentPane().add(lblCarreraSeleccionada);
