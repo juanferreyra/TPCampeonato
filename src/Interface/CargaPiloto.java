@@ -93,6 +93,7 @@ public class CargaPiloto extends JDialog {
 							textNombre.setText("");
 							textNumero.setText("");
 							textNombre.requestFocus();
+							dispose();
 						}
 					}
 				});

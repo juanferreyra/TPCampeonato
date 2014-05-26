@@ -132,6 +132,7 @@ public class CargaCarrera extends JDialog
 							textAnio.setText("");
 							textAutodromo.setText("");
 							textAutodromo.requestFocus();
+							dispose();
 						}
 							
 					}

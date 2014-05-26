@@ -71,13 +71,13 @@ public class Campeonato implements Serializable
 	//correrse una carrera.
 	public void actualizarPuntaje(Carrera c)
 	{
-		for (int i = 0; i < c.resultado.size();i++) 
+		for (int i = 0; i < c.pilotosParticipantes();i++) 
 		{
 			for(int j = 0; j< pilotos.size(); j++ )
 			{
-				if(pilotos.get(j).equals(c.resultado.get(i)))
+				if(pilotos.get(j).equals(c.participante(i)))
 				{
-					pilotos.get(j)._puntos += c.resultado.get(i)._puntos;
+					pilotos.get(j)._puntos += c.participante(i)._puntos;
 					actualizarPromedio(c, i, j);
 				}
 			}
@@ -90,7 +90,7 @@ public class Campeonato implements Serializable
 	private void actualizarPromedio(Carrera c, int i, int j) 
 	{
 		pilotos.get(j).setCantidadDeSobrepasos((pilotos.get(j).getCantidadDeSobrepasos() + 
-				c.resultado.get(i).getCantidadDeSobrepasos()) / carrerasCorridas() );
+				c.participante(i).getCantidadDeSobrepasos()) / carrerasCorridas() );
 	}
 	
 	
@@ -102,7 +102,7 @@ public class Campeonato implements Serializable
 		int corridas= 0;
 		for (int i = 0; i < carreras.size(); i++) 
 		{
-			if(carreras.get(i).estaFinalizada == true)
+			if(carreras.get(i).iscarreraFinalizada())
 			{
 				corridas++;
 			}

@@ -1,5 +1,6 @@
 package Negocio;
 
+import java.awt.Component;
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -7,8 +8,9 @@ public class Carrera implements Serializable
 {
 	private String fecha;
 	private String autodromo;
-	protected ArrayList<Piloto> resultado; //Almacena los pilotos con los resultados de la carrera.
-	public boolean estaFinalizada;//Indica si finalizo la carrera
+	private ArrayList<Piloto> resultado; //Almacena los pilotos con los resultados de la carrera.
+	private boolean carreraFinalizada;//Indica si finalizo la carrera
+	
 	
 	////CONSTRUCTOR////
 	public Carrera(String fecha, String autodromo)
@@ -16,7 +18,7 @@ public class Carrera implements Serializable
 		this.fecha = fecha;
 		this.autodromo = autodromo;
 		resultado = new ArrayList<Piloto>();
-		estaFinalizada = false;
+		carreraFinalizada = false;
 	}
 
 	////GETTERS Y SETTERS////
@@ -40,11 +42,32 @@ public class Carrera implements Serializable
 		this.autodromo = autodromo;
 	}
 	
-	public ArrayList<Piloto> getResultado()
+	
+	public boolean iscarreraFinalizada() 
+	{
+		return carreraFinalizada;
+	}
+
+	public void setcarreraFinalizada(boolean estaFinalizada) 
+	{
+		this.carreraFinalizada = estaFinalizada;
+	}
+
+	
+	public ArrayList<Piloto> getResultado() 
 	{
 		return resultado;
 	}
 
+	public void setResultado(ArrayList<Piloto> resultado) 
+	{
+		this.resultado = resultado;
+	}
+
+	
+	
+	
+	
 	////METODOS////
 	public boolean equals(Carrera otra)
 	{
@@ -134,6 +157,19 @@ public class Carrera implements Serializable
 				resultado.get(i).setCantidadDeSobrepasos(i - resultado.get(i).getPosicionFinal());
 			}
 		}
+	}
+	
+	//Devuelve la cantidad de pilotos que participaron de la carrera
+	public int pilotosParticipantes()
+	{
+		return resultado.size();
+	}
+	
+	//Recibe in indice y devuelve el piloto que se
+	//encuentra en dicho indice en el arreglo de pilotos
+	public Piloto participante(int indice)
+	{
+		return resultado.get(indice);
 	}
 	
 	

@@ -68,7 +68,7 @@ public class FormResultados extends JFrame
 	{
 		//Carrera seleccionada para cargar sus resultados
 		final Carrera carreraSeleccionada = m._campeonato.getCarreras().get(m._carreraSeleccionada);
-		carreraSeleccionada.estaFinalizada = true;
+		carreraSeleccionada.setcarreraFinalizada(true);
 		
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 524, 558);
