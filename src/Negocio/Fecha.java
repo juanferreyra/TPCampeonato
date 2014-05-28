@@ -88,10 +88,35 @@ public class Fecha implements Serializable
 	{
 		return anio;
 	}
-	
-	public static void main(String[] args)
+
+	@Override
+	public boolean equals(Object obj) 
 	{
-		Fecha f = new Fecha("28","02","2013");
-		System.out.println(f.fechaValida());
+		if (!(obj instanceof Fecha))
+			return false;
+		Fecha other = (Fecha) obj;
+		if (anio == null)
+		{
+			if (other.anio != null)
+				return false;
+		}
+		else if (!anio.equals(other.anio))
+			return false;
+		if (dia == null) 
+		{
+			if (other.dia != null)
+				return false;
+		} 
+		else if (!dia.equals(other.dia))
+			return false;
+		if (mes == null) 
+		{
+			if (other.mes != null)
+				return false;
+		} 
+		else if (!mes.equals(other.mes))
+			return false;
+		return true;
 	}
+
 }

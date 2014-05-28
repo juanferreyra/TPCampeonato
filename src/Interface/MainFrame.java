@@ -1,7 +1,6 @@
 package Interface;
 
 import java.awt.EventQueue;
-
 import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
@@ -10,25 +9,18 @@ import javax.swing.JMenuItem;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
-
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-
 import javax.swing.JList;
 import javax.swing.JLabel;
-
 import java.awt.Font;
 import java.io.Serializable;
-
 import javax.swing.SwingConstants;
-
 import Negocio.Campeonato;
 import Persistencia.Serializacion;
-
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.Color;
-
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
@@ -59,7 +51,7 @@ public class MainFrame implements Serializable
 	{
 		EventQueue.invokeLater(new Runnable() 
 		{
-			public void run() 
+			public void run()
 			{
 				try 
 				{
@@ -244,7 +236,6 @@ public class MainFrame implements Serializable
 				}
 		});
 
-		
 		JLabel lblCarreraSeleccionada = new JLabel("Carrera seleccionada:");
 		lblCarreraSeleccionada.setForeground(new Color(0, 0, 0));
 		lblCarreraSeleccionada.setBounds(10, 179, 108, 25);
@@ -256,7 +247,6 @@ public class MainFrame implements Serializable
 		_muestraCarreraSeleccionada.setBounds(119, 181, 165, 20);
 		_frmCampeonatoAutomovilistico.getContentPane().add(_muestraCarreraSeleccionada);
 		_muestraCarreraSeleccionada.setColumns(10);
-		
 	}
 	
 	//Se encarga de agregar al JList de Carreras que se ve en pantalla

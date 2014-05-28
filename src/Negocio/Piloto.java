@@ -2,6 +2,7 @@ package Negocio;
 
 import java.io.Serializable;
 
+@SuppressWarnings("serial")
 public class Piloto implements Serializable
 {
 	private String _nombre;
@@ -30,6 +31,11 @@ public class Piloto implements Serializable
 	public String getNombre() 
 	{
 		return _nombre;
+	}
+	
+	public boolean tienePosicionFinal()
+	{
+		return _posicionFinal!=0;
 	}
 
 	public String getNumero() 

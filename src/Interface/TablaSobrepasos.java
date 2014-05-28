@@ -2,7 +2,6 @@ package Interface;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -12,21 +11,28 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
-public class TablaSobrepasos extends JFrame {
-
+@SuppressWarnings("serial")
+public class TablaSobrepasos extends JFrame 
+{
 	private JPanel contentPane;
 	private JTable tabla;
 
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
+	public static void main(String[] args) 
+	{
+		EventQueue.invokeLater(new Runnable() 
+		{
+			public void run() 
+			{
+				try 
+				{
 					TablaSobrepasos frame = new TablaSobrepasos(null);
 					frame.setVisible(true);
-				} catch (Exception e) {
+				} 
+				catch (Exception e) 
+				{
 					e.printStackTrace();
 				}
 			}
@@ -36,7 +42,8 @@ public class TablaSobrepasos extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public TablaSobrepasos(final MainFrame m) {
+	public TablaSobrepasos(final MainFrame m) 
+	{
 		setTitle("Campeonato Paralelo");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
@@ -52,10 +59,8 @@ public class TablaSobrepasos extends JFrame {
 		JScrollPane scrollPane1 = new JScrollPane();
 		scrollPane1.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		scrollPane.setViewportView(scrollPane1);
-
 		
-		
-		 tabla = new JTable();
+		tabla = new JTable();
 		scrollPane1.setViewportView(tabla);
 		
 		DefaultTableModel modelo = new DefaultTableModel();
@@ -81,8 +86,7 @@ public class TablaSobrepasos extends JFrame {
 			tabla.setModel(modelo);
 			dispose();	
 		}
-	}
-	
+	}	
 }
 
 

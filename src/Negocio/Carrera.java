@@ -141,10 +141,13 @@ public class Carrera implements Serializable
 		mejorClasificado()._puntos += 5;
 		for(int i = 0; i < resultado.size(); i++)
 		{
-			int posicionFinal = resultado.get(i).getPosicionFinal();
-			//Los puntos se calculan dividiendo el largo de la lista de pilotos
-			//por la posicion en la que termino la carrera el piloto
-			resultado.get(i)._puntos += resultado.size()/(posicionFinal);
+			if(resultado.get(i).tienePosicionFinal())
+			{
+				int posicionFinal = resultado.get(i).getPosicionFinal();
+				//Los puntos se calculan dividiendo el largo de la lista de pilotos
+				//por la posicion en la que termino la carrera el piloto
+				resultado.get(i)._puntos += resultado.size()/(posicionFinal);
+			}
 		}
 	}
 	
