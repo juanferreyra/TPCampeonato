@@ -2,9 +2,8 @@ package Negocio;
 import java.io.Serializable;
 import java.security.InvalidParameterException;
 import java.util.ArrayList;
-import java.util.Map;
-import java.util.TreeMap;
 
+@SuppressWarnings("serial")
 public class Campeonato implements Serializable
 {
 	//Almacena todas las carreras del campeonato
@@ -58,7 +57,7 @@ public class Campeonato implements Serializable
 	}
 	
 	//Agrega una carrera a la lista de carreras
-	public void agregarCarrera(String autodromo, String fecha)
+	public void agregarCarrera(String autodromo, Fecha fecha)
 	{
 		Carrera c = new Carrera(fecha, autodromo);
 		if(carreras.contains(c))

@@ -1,6 +1,5 @@
 package Interface;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -8,28 +7,19 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.ScrollPaneConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.JScrollBar;
-
-import java.awt.ScrollPane;
-
 import javax.swing.JButton;
-import javax.swing.border.MatteBorder;
-
-import java.awt.Color;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-
 import javax.swing.JLabel;
 import javax.swing.JTextField;
-
 import Negocio.Carrera;
 import Negocio.Piloto;
 import Persistencia.Serializacion;
 
 //Frame en el cual se ingresan los resultados de una carrera
+@SuppressWarnings("serial")
 public class FormResultados extends JFrame 
 {
 

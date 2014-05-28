@@ -11,12 +11,14 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
+import Negocio.Fecha;
 import Persistencia.Serializacion;
 
 import java.awt.Font;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
+@SuppressWarnings("serial")
 public class CargaCarrera extends JDialog 
 {
 
@@ -108,31 +110,29 @@ public class CargaCarrera extends JDialog
 				{
 					public void actionPerformed(ActionEvent arg0) 
 					{
-						
-						String fecha = textDia.getText() + "/" +  textMes.getText() +"/" +  textAnio.getText();
-						
-						
 						if(faltanDatos(textAutodromo.getText(), textDia.getText(), textMes.getText(), textAnio.getText()))
 						{
 							JOptionPane.showMessageDialog(null, "Debe ingresar todos los datos solicitados");
 						}
-						else if(!fechaValida(fecha))
-						{
-							JOptionPane.showMessageDialog(null, "Debe ingresar una fecha valida");
-						}
 						//Agrega la carrera al campeonato
 						else
 						{
-							m._campeonato.agregarCarrera(textAutodromo.getText(), fecha);
+							Fecha fecha = new Fecha(textDia.getText(), textMes.getText(), textAnio.getText());
+							
+							if(fecha.fechaValida())
+							{
+								m._campeonato.agregarCarrera(textAutodromo.getText(), fecha);
+								
+								//Guarda la carrera en el archivo de datos
+								Serializacion.guardar(m._campeonato, "dato.txt");
+								vaciarTodo();
+								JOptionPane.showMessageDialog(null, "Carrera guardada!!");
+							} 
+							else 
+							{
+								JOptionPane.showMessageDialog(null, "Ingresa una fecha valida por favor");
+							}
 							m.actualizarLista();
-							//Guarda la carrera en el archivo de datos
-							Serializacion.guardar(m._campeonato, "dato.txt");
-							textDia.setText("");
-							textMes.setText("");
-							textAnio.setText("");
-							textAutodromo.setText("");
-							textAutodromo.requestFocus();
-							dispose();
 						}
 							
 					}
@@ -156,9 +156,13 @@ public class CargaCarrera extends JDialog
 	}
 	
 	//Corrobora que la fecha ingresada sea valida
-	private static boolean fechaValida(String time) 
+	private void vaciarTodo() 
 	{
-		return time.matches("([0-2][1-9]|3[0-1])/(0[1-9]|1[0-2])/[0-9][0-9][0-9][0-9]");
+		textDia.setText("");
+		textMes.setText("");
+		textAnio.setText("");
+		textAutodromo.setText("");
+		textAutodromo.requestFocus();
 	}
 	
 	//Indica si hay algun dato de la carrera que no se haya ingresado
