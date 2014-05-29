@@ -136,31 +136,29 @@ public class Carrera implements Serializable
 	public void calcularPuntos() 
 	{
 		//Ordena los resultados para conocer como clasificaron
-		this.ordenarResultados();
-		//Al piloto que clasifico primero se le otorgan 5 puntos adicionales
-		mejorClasificado()._puntos += 5;
+		ordenarResultados();
+		
 		for(int i = 0; i < resultado.size(); i++)
 		{
-			if(resultado.get(i).tienePosicionFinal())
-			{
-				int posicionFinal = resultado.get(i).getPosicionFinal();
-				//Los puntos se calculan dividiendo el largo de la lista de pilotos
-				//por la posicion en la que termino la carrera el piloto
-				resultado.get(i)._puntos += resultado.size()/(posicionFinal);
-			}
+			int posicionFinal = resultado.get(i).getPosicionFinal();
+			resultado.get(i).set_puntos(resultado.size()/(posicionFinal));
 		}
+		
+		//Al piloto que clasifico primero se le otorgan 5 puntos adicionales
+		mejorClasificado().set_puntos(mejorClasificado().get_puntos() + 5);
 	}
 	
 	//Calcula los sobrepasos de cada piloto que participo en la carrera
 	public void calcularSobrepasos()
 	{
+		ordenarResultados();
 		for (int i = 0; i < resultado.size(); i++) 
 		{
 			//Si el tiempo de clasificacion menos la posicion final es positiva
-			if((i - resultado.get(i).getPosicionFinal()) > 0 )
+			if(((i + 1) - resultado.get(i).getPosicionFinal()) > 0 )
 			{
 				//La cant. de sobrepasos es el tiempo de clasificacion menos la posicion final
-				resultado.get(i).setCantidadDeSobrepasos(i - resultado.get(i).getPosicionFinal());
+				resultado.get(i).setCantidadDeSobrepasos((i+1) - resultado.get(i).getPosicionFinal());
 			}
 		}
 	}

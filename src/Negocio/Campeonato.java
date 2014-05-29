@@ -76,7 +76,8 @@ public class Campeonato implements Serializable
 			{
 				if(pilotos.get(j).equals(c.participante(i)))
 				{
-					pilotos.get(j)._puntos += c.participante(i)._puntos;
+					pilotos.get(j).set_puntos(
+							pilotos.get(j).get_puntos() + c.participante(i).get_puntos());
 					actualizarPromedio(c, i, j);
 				}
 			}

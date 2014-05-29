@@ -8,7 +8,7 @@ public class Piloto implements Serializable
 	private String _nombre;
 	private String _numero;
 	private int _cantidadDeSobrepasos;
-	public Integer _puntos;
+	private Integer _puntos;
 	//Tiempo de clasificacion obtenido por el piloto
 	//en una determinada carrera
 	private double _tiempoClasificacion;
@@ -21,7 +21,7 @@ public class Piloto implements Serializable
 	{
 		_nombre = nombre;
 		_numero = numero;
-		_puntos = 0;
+		set_puntos(0);
 		_cantidadDeSobrepasos = 0;
 		_tiempoClasificacion = 0;
 		
@@ -83,6 +83,15 @@ public class Piloto implements Serializable
 		_posicionFinal = posicionFinal;
 	}
 	
+	
+	public Integer get_puntos() {
+		return _puntos;
+	}
+
+	public void set_puntos(Integer _puntos) {
+		this._puntos = _puntos;
+	}
+	
 	////METODOS////
 	@Override 
 	public boolean equals(Object otro) 
@@ -97,4 +106,6 @@ public class Piloto implements Serializable
 	{
 		return "|| Nombre: "+_nombre+" Clasif: "+_tiempoClasificacion+" PosFinal: "+_posicionFinal;
 	}
+
+
 }
