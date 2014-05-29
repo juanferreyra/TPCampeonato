@@ -74,7 +74,7 @@ public class TablaPuntos extends JFrame {
 			for (int i = 0; i < m._campeonato.getPilotos().size(); i++) 
 			{
 				String nombrePiloto = m._campeonato.getPilotos().get(i).getNombre();
-				String puntosPiloto = Integer.toString(m._campeonato.getPilotos().get(i)._puntos);
+				String puntosPiloto = Integer.toString(m._campeonato.getPilotos().get(i).get_puntos());
 			
 				modelo.addRow(new String[] {nombrePiloto,puntosPiloto});
 			}
