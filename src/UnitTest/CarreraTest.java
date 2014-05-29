@@ -1,9 +1,7 @@
 package UnitTest;
 
 import static org.junit.Assert.*;
-
 import org.junit.Test;
-
 import Negocio.Carrera;
 import Negocio.Fecha;
 import Negocio.Piloto;
