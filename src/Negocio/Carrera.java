@@ -1,19 +1,19 @@
 package Negocio;
 
-import java.awt.Component;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+@SuppressWarnings("serial")
 public class Carrera implements Serializable
 {
-	private String fecha;
+	private Fecha fecha;
 	private String autodromo;
 	private ArrayList<Piloto> resultado; //Almacena los pilotos con los resultados de la carrera.
 	private boolean carreraFinalizada;//Indica si finalizo la carrera
 	
 	
 	////CONSTRUCTOR////
-	public Carrera(String fecha, String autodromo)
+	public Carrera(Fecha fecha, String autodromo)
 	{
 		this.fecha = fecha;
 		this.autodromo = autodromo;
@@ -22,12 +22,12 @@ public class Carrera implements Serializable
 	}
 
 	////GETTERS Y SETTERS////
-	public String getFecha()
+	public Fecha getFecha()
 	{
 		return fecha;
 	}
 
-	public void setFecha(String fecha) 
+	public void setFecha(Fecha fecha) 
 	{
 		this.fecha = fecha;
 	}
@@ -63,20 +63,21 @@ public class Carrera implements Serializable
 	{
 		this.resultado = resultado;
 	}
-
-	
-	
-	
 	
 	////METODOS////
-	public boolean equals(Carrera otra)
+	@Override
+	public boolean equals(Object otra)
 	{
-		return (this.fecha.equals(otra.fecha) && this.autodromo.equals(otra.autodromo));
+		if(otra instanceof Carrera)
+			return (fecha.equals(((Carrera) otra).getFecha()) 
+					&& autodromo.equals(((Carrera) otra).getAutodromo()));
+		else
+			return false;
 	}
 	
 	public String toString()
 	{
-		return "AUTODROMO: " + autodromo + "  -  " + "FECHA: " + fecha;
+		return "AUTODROMO: " + autodromo + "  -  " + "FECHA: " + fecha.toString();
 	}
 	
 	//Toma un piloto con su posicion final en la carrera, y su
@@ -140,8 +141,13 @@ public class Carrera implements Serializable
 		mejorClasificado()._puntos += 5;
 		for(int i = 0; i < resultado.size(); i++)
 		{
-			int posicionFinal = resultado.get(i).getPosicionFinal();
-			resultado.get(i)._puntos += resultado.size()/(posicionFinal);
+			if(resultado.get(i).tienePosicionFinal())
+			{
+				int posicionFinal = resultado.get(i).getPosicionFinal();
+				//Los puntos se calculan dividiendo el largo de la lista de pilotos
+				//por la posicion en la que termino la carrera el piloto
+				resultado.get(i)._puntos += resultado.size()/(posicionFinal);
+			}
 		}
 	}
 	

@@ -2,7 +2,6 @@ package Interface;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
-
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
@@ -10,13 +9,12 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
-
 import Persistencia.Serializacion;
-
 import java.awt.Font;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
+@SuppressWarnings("serial")
 public class CargaPiloto extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
@@ -93,7 +91,7 @@ public class CargaPiloto extends JDialog {
 							textNombre.setText("");
 							textNumero.setText("");
 							textNombre.requestFocus();
-							dispose();
+							JOptionPane.showMessageDialog(null, "Piloto guardado!!");
 						}
 					}
 				});

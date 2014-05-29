@@ -1,16 +1,19 @@
 package Interface;
+
 import java.awt.Dimension;
 import java.awt.Graphics;
 import javax.swing.ImageIcon;
+
+@SuppressWarnings("serial")
 public class Panel extends javax.swing.JPanel 
 {
 	
-public Panel()
-{
-	this.setSize(300,340);
-}
+	public Panel()
+	{
+		this.setSize(300,340);
+	}
 
-@Override
+	@Override
 	public void paintComponent (Graphics g)
 	{
 		Dimension tamanio = getSize();

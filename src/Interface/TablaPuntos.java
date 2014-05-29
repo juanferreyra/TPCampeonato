@@ -1,33 +1,37 @@
 package Interface;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.RootPaneContainer;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.ScrollPaneConstants;
 
-public class TablaPuntos extends JFrame {
-
+@SuppressWarnings("serial")
+public class TablaPuntos extends JFrame 
+{
 	private JPanel contentPane;
 	private JTable tabla;
 
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
+	public static void main(String[] args) 
+	{
+		EventQueue.invokeLater(new Runnable() 
+		{
+			public void run() 
+			{
+				try 
+				{
 					TablaPuntos frame = new TablaPuntos(null);
 					frame.setVisible(true);
-				} catch (Exception e) {
+				} 
+				catch (Exception e) 
+				{
 					e.printStackTrace();
 				}
 			}
@@ -37,7 +41,8 @@ public class TablaPuntos extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public TablaPuntos(final MainFrame m) {
+	public TablaPuntos(final MainFrame m) 
+	{
 		setTitle("Tabla de Puntaciones");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
@@ -54,8 +59,6 @@ public class TablaPuntos extends JFrame {
 		scrollPane1.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		scrollPane.setViewportView(scrollPane1);
 
-		
-		
 		tabla = new JTable();
 		scrollPane1.setViewportView(tabla);
 		
