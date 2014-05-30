@@ -130,8 +130,6 @@ public class MainFrame implements Serializable
 				{
 					_carreraSeleccionada = _listCarreras.getSelectedIndex();
 					_muestraCarreraSeleccionada.setText(_campeonato.getCarreras().get(_carreraSeleccionada).getAutodromo()+" | "+_campeonato.getCarreras().get(_carreraSeleccionada).getFecha());
-					//mensaje para ver si se en verdad selecciona una carrera
-					//JOptionPane.showMessageDialog(null, "Seleccionaste el evento "+_listCarreras.getSelectedValue());
 				}
 			}
 		});

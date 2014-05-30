@@ -4,6 +4,7 @@ import java.io.FileOutputStream;
 import java.io.FileInputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+
 import Negocio.Campeonato;
 
 
@@ -38,6 +39,7 @@ public class Serializacion
 		try
 		{
 			FileInputStream fis = new FileInputStream(archivo);
+			@SuppressWarnings("resource")
 			ObjectInputStream ois = new ObjectInputStream(fis);	
 			
 			ret = (Campeonato)ois.readObject();

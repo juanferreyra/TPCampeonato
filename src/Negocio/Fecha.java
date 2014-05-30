@@ -16,7 +16,7 @@ public class Fecha implements Serializable
 		anio=Integer.parseInt(a);
 	}
 	
-	static Integer diasDelMes(Integer mes, Integer anio)
+	private Integer diasDelMes(Integer mes, Integer anio)
 	{
 		if (mes==2)
 		{

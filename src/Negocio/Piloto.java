@@ -32,11 +32,6 @@ public class Piloto implements Serializable
 	{
 		return _nombre;
 	}
-	
-	public boolean tienePosicionFinal()
-	{
-		return _posicionFinal!=0;
-	}
 
 	public String getNumero() 
 	{
@@ -107,5 +102,9 @@ public class Piloto implements Serializable
 		return "|| Nombre: "+_nombre+" Clasif: "+_tiempoClasificacion+" PosFinal: "+_posicionFinal;
 	}
 
+	public boolean tienePosicionFinal()
+	{
+		return _posicionFinal!=0;
+	}
 
 }
